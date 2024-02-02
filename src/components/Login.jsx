@@ -1,25 +1,35 @@
-import { useRef, useState } from "react";
+/* eslint-disable react/no-unescaped-entities */
 import Header from "./Header";
+import { NETFLIX_BACKGROUND } from "../utils/constant";
+import { useRef, useState } from "react";
 import { validateDate } from "../utils/validation";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
   const username = useRef(null);
 
   const handleValidation = () => {
-    const message = validateDate(
-      email.current.value,
-      password.current.value,
-        username.current.value
-    );
+    const message = !isSignInForm
+      ? validateDate(
+          email.current.value,
+          password.current.value,
+          username.current.value
+        )
+      : validateDate(email.current.value, password.current.value);
     setErrorMessage(message);
     if (message) return;
 
@@ -27,10 +37,31 @@ const Login = () => {
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
+        username.current.value
       )
         .then((userCredential) => {
           const user = userCredential.user;
+          updateProfile(auth.currentUser, {
+            displayName: username.current.value,
+            photoURL:
+              "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png?20201013161117",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error);
+            });
           console.log(user);
         })
         .catch((error) => {
@@ -45,7 +76,7 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-       
+          navigate("/browse");
           const user = userCredential.user;
           console.log(user);
         })
@@ -53,97 +84,112 @@ const Login = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode, " ---------------", errorMessage);
-          setErrorMessage("Sorry, we can't find an account with this email or password. Please try again or create a new account.")
+          setErrorMessage(
+            "Sorry, we can't find an account with this email or password. Please try again or create a new account."
+          );
         });
     }
   };
   const toggleSignIn = () => {
     setIsSignInForm(!isSignInForm);
-  };
-
+  }
   return (
-    <div className="main">
-      <div className="relative  w-full h-full  ">
-        <Header />
-        <img
-          className=" bg-image-rgb "
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/4da5d2b1-1b22-498d-90c0-4d86701dffcc/98a1cb1e-5a1d-4b98-a46f-995272b632dd/IN-en-20240129-popsignuptwoweeks-perspective_alpha_website_large.jpg"
-        />
-        <div className="absolute z-20 opacity-60 inset-0 h-full w-full bg-black"></div>
-        <div
-          className={`h-${
-            isSignInForm ? "60%" : "80%"
-          } w-[30%] top-[50%] translate-x-[-50%] translate-y-[-50%] left-[50%] absolute z-50`}
-        >
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className=" w-[100%]  h-[100%] relative p-12  bg-black-rgba text-white"
-          >
-            <h1 className="text-3xl font-bold mb-6">
-              {isSignInForm ? "Sign In" : "Sign Up"}
-            </h1>
-            {!isSignInForm && (
-              <input
-                className="p-3 m-2  w-full  bg-[#2e3846] text-white border border-white rounded-md"
-                type="text"
-                ref={username}
-                placeholder="Enter Username"
-              />
-            )}
+    <div className="w-full relative overflow-hidden bg-black min-h-[100vh] p-4 flex flex-col justify-between xl:bg-black-rgba xl:p-0">
+      <img
+        className="hidden -z-10 w-max-full object-cover object-center xl:block xl:h-full xl:absolute"
+        src={NETFLIX_BACKGROUND}
+      />
+
+      <Header />
+
+      <div className="w-full min-h-[70vh] rounded-md mx-auto md:w-[50%] xl:w-[45%] bg-black-rgba xl:p-12">
+        <p className="text-white font-bold text-3xl my-4">
+          {isSignInForm ? "Sign in" : "Sign up"}
+        </p>
+        <div className="input-container flex flex-col gap-4">
+          {!isSignInForm && (
             <input
-              ref={email}
-              className="p-3 m-2  w-full bg-[#2e3846] text-white border border-white rounded-md"
-              type="text"
-              placeholder="Email or phone number"
+              className=" w-full p-5 rounded-md   text-white bg-[#252525] transition ease-in-out delay-1500 "
+              type="username"
+              name="username"
+              id="username"
+              ref={username}
+              placeholder="username"
             />
-            <input
-              ref={password}
-              className="p-3 m-2  w-full  bg-[#2e3846] text-white border  border-white rounded-md"
-              type="password"
-              placeholder="password"
-            />
-            {errorMessage == null ? (
+          )}
+          <input
+            className="w-full p-5 rounded-md  text-white bg-[#252525] "
+            type="email"
+            name="email"
+            id="email"
+            ref={email}
+            placeholder="email"
+          />
+          <input
+            className="w-full p-5 rounded-md text-white bg-[#252525] "
+            type="password"
+            name="password"
+            id="password"
+            ref={password}
+            placeholder="password"
+          />
+           {errorMessage == null ? (
               ""
             ) : (
-              <p className="font-bold text-red-600 text-center">{errorMessage}</p>
+              <p className="font-mono text-red-600 text-center">
+                {errorMessage}
+              </p>
             )}
-            <button
-              onClick={handleValidation}
-              className=" text-xl font-medium p-2 m-2 bg-[#c11119] w-full rounded-md"
+          <button
+            onClick={handleValidation}
+            className="p-4 w-full bg-[#E50914] text-white text-sm font-semibold rounded-md"
+          >
+            {isSignInForm ? " Sign in" : "Sign up"}
+          </button>
+          <p className="p-1 w-full text-center text-white text-sm">
+            Forget Password?
+          </p>
+          <p>
+            <input
+              className="mr-2 inline-block"
+              type="checkbox"
+              name=""
+              id=""
+            />
+            <span className="inline-block text-white">Remember Me</span>
+          </p>
+          <p className="p-1 w-full text-left text-white text-sm ">
+            {isSignInForm ? "New to Netflix?  " : "Already a member?"}{" "}
+            <span
+              onClick={toggleSignIn}
+              className="font-semibold hover:cursor-pointer hover:underline "
             >
-              {isSignInForm ? " Sign In" : "Sign Up"}
-            </button>
-            <p className="text-center m-2 hover:underline hover:text-[#868484]  cursor-pointer">
-              Forget password?
-            </p>
-            <div className="flex mt-10 ">
-              <input type="checkbox" className="" />
-              <p className="ml-2">Remember Me</p>
-            </div>
-            <div>
-              <p className="mt-1 text-[#b5b5b5]">
-                {isSignInForm ? "New to Netflix?  " : "Already a member?"}
-                <span
-                  onClick={toggleSignIn}
-                  className="hover:cursor-pointer hover:underline text-[#ffffff]"
-                >
-                  {isSignInForm ? " Sign up now." : " Sign In."}
-                </span>
-              </p>
-              <p className="text-[#8c8c8c] mt-2 text-[13px] font-normal">
-                This page is protected by Google reCAPTCHA to <br />
-                ensure you are not a bot.
-                <span className="text-[#132cc1] hover:underline">
-                  Learn more.
-                </span>
-              </p>
-            </div>
-          </form>
+              {" "}
+              {isSignInForm ? " Sign up now." : " Sign in."}
+            </span>
+          </p>
+          <span className="inline-block text-xs w-full  text-gray-500">
+            This page is protected by Google reCAPTCHA to ensure you're not a
+            bot. <span className="text-blue-700"> Learn more. </span>
+          </span>
         </div>
-        <div className="footer flex justify-center items-center absolute bottom-0  w-full h-[10%]  z-50 ">
-          <h1 className="text-white font-semibold text-2xl ">
-            Made with &hearts; by Adarsh Gajbhare
-          </h1>
+      </div>
+      <div className="footer bg-black-rgba mt-20 border-t-2 py-4 border-[#ffffff28f] flex flex-col gap-4 w-full text-gray-400  min-h-[20vh] xl:border-none h-full overflow-hidden xl:gap-8">
+        <div className="w-[100%] flex-col flex h-full xl:mx-auto xl:w-[70%]  ">
+          <p className="w-full">Questions? Call 000-800-100-8343</p>
+          <div className="flex items-center w-full justify-between ">
+            <ul className="leading-8 ">
+              <li>FAQ</li>
+              <li>Teams of Use</li>
+              <li>Cookie Preferences</li>
+            </ul>
+            <ul className="leading-8">
+              <li>Help Centre</li>
+              <li>Privacy</li>
+              <li>Corporate Information</li>
+            </ul>
+          </div>
+          <button className="text-start">English</button>
         </div>
       </div>
     </div>
