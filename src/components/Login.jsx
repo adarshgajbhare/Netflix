@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import Header from "./Header";
-import { NETFLIX_BACKGROUND } from "../utils/constant";
+import { NETFLIX_BACKGROUND, USER_ICON } from "../utils/constant";
 import { useRef, useState } from "react";
 import { validateDate } from "../utils/validation";
 import {
@@ -9,7 +9,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
@@ -17,7 +16,6 @@ const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
   const username = useRef(null);
@@ -44,8 +42,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(auth.currentUser, {
             displayName: username.current.value,
-            photoURL:
-              "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png?20201013161117",
+            photoURL: USER_ICON,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -56,18 +53,16 @@ const Login = () => {
                   displayName: displayName,
                   photoURL: photoURL,
                 })
-              );
-              navigate("/browse");
+              );  
             })
             .catch((error) => {
               setErrorMessage(error);
             });
           console.log(user);
         })
+        // eslint-disable-next-line no-unused-vars
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, "----- ", errorMessage);
+      
         });
     } else {
       signInWithEmailAndPassword(
@@ -76,14 +71,12 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          navigate("/browse");
+          // eslint-disable-next-line no-unused-vars
           const user = userCredential.user;
-          console.log(user);
         })
+        // eslint-disable-next-line no-unused-vars
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, " ---------------", errorMessage);
+         
           setErrorMessage(
             "Sorry, we can't find an account with this email or password. Please try again or create a new account."
           );
