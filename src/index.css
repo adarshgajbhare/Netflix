@@ -13,3 +13,17 @@ html, body {
    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px 0px;
    backdrop-filter: blur(100px);
 }
+
+
+::-webkit-scrollbar {
+   width: 10px;
+   height: 10px;
+ }
+ 
+ ::-webkit-scrollbar-thumb {
+   background: rgba(90, 90, 90);
+ }
+ 
+ ::-webkit-scrollbar-track {
+   background: rgba(0, 0, 0, 0.2);
+ }

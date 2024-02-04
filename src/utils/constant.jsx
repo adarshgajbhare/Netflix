@@ -1,3 +1,10 @@
+const generateRandomPageNumber = function () {
+  return Math.floor(Math.random() * 10) + 1;
+};
+
+const pageNumber = generateRandomPageNumber();
+////console.log("generated number =", pageNumber);
+
 export const NETFLIX_LOGO =
   "https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png";
 
@@ -7,12 +14,19 @@ export const NETFLIX_BACKGROUND =
 export const USER_ICON =
   "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png?20201013161117";
 
-export const NOW_PLAYING_MOVIES_API =
-  "https://api.themoviedb.org/3/movie/now_playing?page=1";
+export const POSTER_URL = "https://image.tmdb.org/t/p/w500";
 
-export const POSTER_URL = "https://image.tmdb.org/t/p/w500"
+export const NOW_PLAYING_MOVIES_API = `https://api.themoviedb.org/3/movie/now_playing?page=${pageNumber}`;
 
-  export const API_OPTIONS = {
+export const POPULAR_MOVIES_API = `https://api.themoviedb.org/3/movie/popular?page=${pageNumber}`;
+
+export const TOP_RATED_MOVIES_API = `https://api.themoviedb.org/3/movie/top_rated?page=${pageNumber}`;
+
+export const UPCOMING_MOVIES_API = `https://api.themoviedb.org/3/movie/upcoming?page=${pageNumber}`;
+
+export const TOP_TV_SHOW = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${pageNumber}`;
+
+export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
