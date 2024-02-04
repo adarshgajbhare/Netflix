@@ -46,15 +46,13 @@ const Browse = () => {
           <div className="">
             <Header />
           </div>
-          {/* <img className="h-10" src={user?.photoURL} /> */}
           <i
             onClick={HandleSignOut}
             className="fa-solid fa-power-off text-white text-3xl pr-2"
           ></i>
         </div>
       </div>
-      {/*  */}
-      {/* buttons */}
+     
       <div className="text-white text-sm font-bold mt-20 z-50 flex items-center justify-between gap-2  2xl:hidden lg:hidden ">
         <button
           onClick={HandleTvShows}
