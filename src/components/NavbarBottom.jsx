@@ -18,7 +18,9 @@ const NavbarBottom = () => {
           <img className="h-10 mx-auto" src={user?.photoURL} />
         </div>
 
-        <p className="text-white font-medium w-min-0 text-ellipsis overflow-hidden ...">{user?.displayName}</p>
+        <p className="text-white font-medium w-min-0 text-ellipsis overflow-hidden ...">
+          {user?.displayName}
+        </p>
       </div>
     </div>
   );

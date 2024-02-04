@@ -13,7 +13,7 @@ const MoviesCard = ({ poster_path }) => {
         src={POSTER_URL + poster_path}
         alt="movie posters"
       />
-      
+
     </div>
   );
 };

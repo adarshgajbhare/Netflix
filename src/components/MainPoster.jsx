@@ -47,8 +47,8 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
       </Tilt>
       <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block">
         <div
-          className="img-container relative rounded-xl overflow-hidden md:scale-75 2xl:scale-100 lg:scale-100 2xl:w-full 2xl:h-[70vh]
-         lg:w-full lg:h-[70vh]"
+          className="img-container relative rounded-md overflow-hidden 2xl:overflow-x-hidden md:scale-75 2xl:scale-100 lg:scale-100 2xl:w-full 2xl:h-[80vh]
+         lg:w-full lg:h-[0vh]"
         >
           <div
             className="absolute inset-0  bg-gradient-to-t  opacity-75 from-black 
@@ -81,9 +81,9 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
               </div>
             </div>
           </div>
-          <div className="2xl:visible w-full aspect-video">
+          <div className="2xl:visible 2xl:w-full lg:visible aspect-video 2xl:rounded-none  ">
             <iframe
-              className="w-full aspect-video"
+              className="w-full  aspect-video"
               src={"https://www.youtube.com/embed/" + video?.key + "?rel=0&modestbranding=1&autohide=1&mute=1&showinfo=0&controls=0&autoplay=1"}
               title="YouTube video player"
               frameBorder="0"
