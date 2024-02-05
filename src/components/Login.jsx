@@ -53,16 +53,20 @@ const Login = () => {
                   displayName: displayName,
                   photoURL: photoURL,
                 })
-              );  
+              );
             })
             .catch((error) => {
               setErrorMessage(error);
+              console.log(error);
             });
-          //console.log(user);
+          console.log(user);
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
-      
+          console.log(error);
+          setErrorMessage(
+            "We’re sorry. This login email already exists. Please try a different email address to register."
+          );
         });
     } else {
       signInWithEmailAndPassword(
@@ -76,7 +80,6 @@ const Login = () => {
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
-         
           setErrorMessage(
             "Sorry, we can't find an account with this email or password. Please try again or create a new account."
           );
@@ -85,7 +88,7 @@ const Login = () => {
   };
   const toggleSignIn = () => {
     setIsSignInForm(!isSignInForm);
-  }
+  };
   return (
     <div className="w-full relative overflow-hidden bg-black min-h-[100vh] p-4 flex flex-col justify-between xl:bg-black-rgba xl:p-0">
       <img
@@ -126,13 +129,11 @@ const Login = () => {
             ref={password}
             placeholder="password"
           />
-           {errorMessage == null ? (
-              ""
-            ) : (
-              <p className="font-mono text-red-600 text-center">
-                {errorMessage}
-              </p>
-            )}
+          {errorMessage == null ? (
+            ""
+          ) : (
+            <p className="font-mono text-red-600 text-center">{errorMessage}</p>
+          )}
           <button
             onClick={handleValidation}
             className="p-4 w-full bg-[#E50914] text-white text-sm font-semibold rounded-md"

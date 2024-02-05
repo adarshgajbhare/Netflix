@@ -13,7 +13,16 @@ html, body {
    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px 0px;
    backdrop-filter: blur(100px);
 }
-
+.bg-hotstar {
+   background: rgba(255, 255, 255, 0.1);
+   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px 0px;
+   backdrop-filter: blur(1px);
+}
+.sss {
+  --tw-shadow: -50px 25px 50px 12px rgb(0, 0, 0);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 
 ::-webkit-scrollbar {
    width: 10px;

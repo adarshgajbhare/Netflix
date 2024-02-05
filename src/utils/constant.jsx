@@ -1,4 +1,4 @@
-const generateRandomPageNumber = function () {
+export const generateRandomPageNumber = function () {
   return Math.floor(Math.random() * 10) + 1;
 };
 
