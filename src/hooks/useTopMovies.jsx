@@ -10,7 +10,7 @@ const useTopMovies = () => {
   const getTopMovies = async () => {
     const data = await fetch(TOP_RATED_MOVIES_API, API_OPTIONS);
     const json = await data.json();
-    //console.log(json.results);
+  
     dispatch(addTopMovies(json.results));
     
   };

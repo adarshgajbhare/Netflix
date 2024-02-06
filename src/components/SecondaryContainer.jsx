@@ -1,25 +1,36 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useSelector } from "react-redux";
+
 import MovieList from "./MovieList";
 import NavbarBottom from "./NavbarBottom";
 
-const SecondaryContainer = ({ series }) => {
-  const movies = useSelector((store) => store?.movies);
-
-  if (!movies) return null;
+const  SecondaryContainer = ({ isSeries , allMovies }) => {
 
   return (
-    <div className="">
-      <MovieList title={"Now Playing"} movies={movies?.nowPlayingMovies} />{" "}
-      <MovieList title={"Popular Movies"} movies={movies?.popularMovies} />{" "}
-      <MovieList title={"Top Movies"} movies={movies?.topMovies} />
-      <MovieList title={"Upcoming Movies"} movies={movies?.upcomingMovies} />
+    <> 
+   {isSeries ?
+   <div className="">
+      <MovieList title={"Popular Shows"} movies={allMovies?.popularShow} />{" "}
+      <MovieList title={"Top Rated"} movies={allMovies?.topShows} />{" "}
+      <MovieList title={"Upcoming Shows"} movies={allMovies?.onAirShow} />
+      <MovieList title={"On Air Shows "} movies={allMovies?.arrivingTodayShow} />
+      
       <div className="h-20"></div>
       <div className="lg:hidden 2xl:hidden">
         <NavbarBottom />
       </div>
     </div>
+    :<div className="">
+      <MovieList title={"Now Playing"} movies={allMovies?.nowPlayingMovies} />{" "}
+      <MovieList title={"Popular Movies"} movies={allMovies?.popularMovies} />{" "}
+      <MovieList title={"Top Movies"} movies={allMovies?.topMovies} />
+      <MovieList title={"Upcoming Movies"} movies={allMovies?.upcomingMovies} />
+      <div className="h-20"></div>
+      <div className="lg:hidden 2xl:hidden">
+        <NavbarBottom />
+      </div>
+    </div>}
+    </>
   );
 };
 

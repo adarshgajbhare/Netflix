@@ -9,10 +9,8 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
- 
- 
+
   useEffect(() => {
-    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
@@ -24,7 +22,9 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
-        navigator("/browse");
+        if (location.pathname === "/") {
+          navigator("/browse");
+        }
       } else {
         dispatch(removeUser());
         navigator("/");

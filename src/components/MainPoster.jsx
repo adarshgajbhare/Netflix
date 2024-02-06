@@ -1,22 +1,28 @@
 /* eslint-disable no-unused-vars */
-import { POSTER_URL } from "../utils/constant";
+import { POSTER_URL, SERIES_POSTER_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
 import Tilt from "react-vanilla-tilt";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
-import BackgroundVideo from "./BackgroundVideo";
-import useMovieTrailer from "../utils/useMovieTrailer";
+import useMovieTrailer from "../hooks/useMovieTrailer";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { removeUser } from "../utils/userSlice";
-import useTopShows from "../hooks/useTopShows";
+import { useState } from "react";
+import useShowTrailer from "../hooks/useShowTrailer";
+
+
+
 // eslint-disable-next-line react/prop-types
-const MainPoster = ({ title, poster_path, original_title, id }) => {
+  const MainPoster = ({ title, poster_path, original_title, id  }) => {
   const user = useSelector((store) => store?.user);
+  const [isSeries, setIsSeries] =useState(false)
   const video = useSelector((store) => store?.movies?.trailerVideo);
   const dispatch = useDispatch();
-  console.log("Main Id", id);
+
+   
   useMovieTrailer({ id });
+  useShowTrailer({id});
 
   const HandleSignOut = () => {
     signOut(auth)
@@ -24,14 +30,17 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
         dispatch(removeUser());
       })
       .catch((error) => {
-        //console.log(error); 
+        
       });
   };
-  useTopShows();
-  const HandleTvShows = () =>{
-    useTopShows();
-  }
 
+
+  const HandleTvShows = () =>{
+  
+    setIsSeries(!isSeries);
+   
+  }
+ 
   return (
     <div className="p-5">
       <Tilt
@@ -61,7 +70,8 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
                 </button>
               </div>
             </div>
-            <img className="h-full w-full " src={POSTER_URL + poster_path} />
+           { isSeries ?<img className="h-full w-full " src={SERIES_POSTER_URL + poster_path} /> : <img className="h-full w-full " src={POSTER_URL + poster_path} /> } 
+          
           </div>{" "}
         </div>
       </Tilt>
@@ -70,12 +80,7 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
           className="img-container relative  rounded-md overflow-hidden 2xl:overflow-x-hidden md:scale-75
            2xl:scale-100 lg:scale-100 2xl:w-full 
            2xl:h-[80vh]  lg:h-80vh]  lg:w-full ">
-          {/* Added changed this values 2xl:h-[80vh]  lg:h-[10vh]*/}
-          {/* <div
-            className="absolute inset-0  bg-gradient-to-t  opacity-75 from-black 
-          lg:bg-gradient-to-b  lg:opacity-75 lg:from-black 
-          2xl:bg-gradient-to-b  2xl:opacity-75 2xl:from-black"
-          ></div> */}
+        
 
           <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block ">
             <div className="navbar z-50  w-full text-center flex justify-between items-center p-2 2xl:bg-transparent 2xl:px-6 
@@ -85,13 +90,14 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
                 <Header />
                 <div className="invisible 2xl:visible lg:visible">
                   <ul className="text-white 2xl:font-bold xl:font-bold 2xl:flex 2xl:gap-3 lg:flex lg:gap-3 hover:cursor-pointer ">
-                    <li className=" hover:underline">Home</li>
-                   <Link to={"/Browse/shows"}>   <li onClick={HandleTvShows} className=" hover:underline">Tv Show</li></Link>
+                  <Link to={"/Browse"}>   <li className=" hover:underline">Home</li></Link>
+                   
+                   <Link to={"/Shows"}> <li className=" hover:underline">Tv Show</li> </Link>
                    <li className=" hover:underline">Movies</li>
                     <li className=" hover:underline">Recently Added</li>
                     <li className=" hover:underline">My List</li>
                   </ul>
-                </div>
+                </div> 
               </div>
               <div className="2xl:flex 2xl:items-center 2xl:gap-3 lg:flex lg:items-center lg:gap-3">
                 <img

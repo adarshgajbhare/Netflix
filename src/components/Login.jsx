@@ -57,13 +57,13 @@ const Login = () => {
             })
             .catch((error) => {
               setErrorMessage(error);
-              console.log(error);
+         
             });
-          console.log(user);
+   
         })
         // eslint-disable-next-line no-unused-vars
         .catch((error) => {
-          console.log(error);
+        
           setErrorMessage(
             "We’re sorry. This login email already exists. Please try a different email address to register."
           );

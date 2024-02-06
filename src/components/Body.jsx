@@ -14,7 +14,7 @@ const Body = () => {
       element: <Browse />,
     },
     {
-      path: "/Browse/shows",
+      path: "/Shows",
       element: <TvShows />,
     },
   ]);

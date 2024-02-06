@@ -52,10 +52,3 @@
   // };
 
   // export default SecondaryContainer;
-
-  
-
-  const youtubeEmbedUrl = `https://www.youtube.com/embed/${video?.key}?rel=0&modestbranding=1&autohide=1&autoplay=1&showinfo=0&controls=0&loop=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=0&autohide=0&mute=100`;
-
-
-  src=`https://www.youtube.com/embed/${video?.key};controls=0&mute=00&autoplay=1` title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen

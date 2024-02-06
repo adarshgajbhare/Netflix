@@ -11,61 +11,55 @@ import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import usePopularMovies from "../hooks/usePopularMovies";
 import useTopMovies from "../hooks/useTopMovies";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
-import {  useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import TopSmallNav from "./TopSmallNav";
 
-const Browse = (  ) => {
-  const [showTv, setShowTv] = useState(false);
-  const [isVolume, setIsVolume] = useState(false);
+const Browse = () => {
+  const { movieCards, setMoovieCards } = useState(false);
+  console.log(movieCards);
   const dispatch = useDispatch();
-  const user = useSelector((store) => store?.user);
   const video = useSelector((store) => store?.movies?.trailerVideo);
+  const [isVolume, setIsVolume] = useState(false);
+  console.log(video);
   useNowPlayingMovies();
   usePopularMovies();
   useTopMovies();
   useUpcomingMovies();
 
   const movies = useSelector((store) => store?.movies?.nowPlayingMovies);
+  const allMovies = useSelector((store) => store?.movies);
+
+  if (!allMovies) return null;
   if (!movies) return;
 
   const mainMovie = movies[1];
-  const { original_title, title, overview, id } = mainMovie;
-  console.log(mainMovie);
+  const { original_title, title, overview, id, poster_path } = mainMovie;
 
   const HandleSignOut = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
       })
-      .catch((error) => {
-        //console.log(error);
-      });
+      .catch((error) => {});
   };
-
-  const HandleTvShows = () => {
-    console.log("Enter tv show");
-    
-    setShowTv(true);
-  };
-
   const HandleVolume = () => {
     setIsVolume(!isVolume);
   };
 
-  const youtubeEmbedUrl = `https://www.youtube.com/embed/${
+  const moviesYoutube = `https://www.youtube.com/embed/${
     video?.key
   }?rel=0&modestbranding=1&autohide=1&autoplay=1&showinfo=0&controls=0&loop=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=0&autohide=0&mute=${
     isVolume ? "" : 1
   }`;
-
   return (
     <div className="main-container relative w-full min-h-full overflow-x-hidden">
       <div className="absolute inset-0 -z-10   [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
       <div className="absolute h-[100vh] w-full  -z-10  inset-0  ">
         <iframe
           className="hidden 2xl:block lg:block h-full w-full object-cover scale-150 bg-gradient-to-t from-black"
-          src={youtubeEmbedUrl}
+          src={moviesYoutube}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
         ></iframe>
       </div>
       <div className="mobile 2xl:hidden lg:hidden">
@@ -79,24 +73,16 @@ const Browse = (  ) => {
           ></i>
         </div>
       </div>
-
-      <div className="text-white text-sm font-bold mt-20 z-50 flex items-center justify-between gap-2  2xl:hidden lg:hidden ">
-        <button
-          onClick={HandleTvShows}
-          className="flex-1 rounded-[100vw] border-2 py-2 px-2"
-        >
-          Tv Shows
-        </button>
-        <button className="flex-1 rounded-[100vw] border-2 py-2 px-2  ">
-          Movies
-        </button>
-        <button className="flex-1 rounded-[100vw] border-2 py-2 px-2  w-min-0">
-          Categories
-          <i className="fa-sharp fa-solid fa-chevron-down ml-2"></i>
-        </button>
-      </div>
-      <MainContainer />
-      <SecondaryContainer />
+    <TopSmallNav/>      
+      <MainContainer
+        original_title={original_title}
+        tittle={title}
+        overview={overview}
+        id={id}
+        poster_path={poster_path}
+      />
+      {console.log("before Sending", movieCards)}
+      <SecondaryContainer isSeries={movieCards} allMovies={allMovies} />
       <div
         className="hidden 2xl:block lg:block absolute w-[500px] h-[450px] top-56 left-[55px]  gap-4 rounded-md    
         flex-col   z-[999]"
