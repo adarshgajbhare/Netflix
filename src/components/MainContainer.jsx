@@ -3,7 +3,7 @@
 /* eslint-disable react/no-unknown-property */
 import { useSelector } from "react-redux";
 import MainPoster from "./MainPoster";
-
+import React from "react";
 const MainContainer = ({ title , original_name , poster_path, overview , id  }) => {
 
   return (

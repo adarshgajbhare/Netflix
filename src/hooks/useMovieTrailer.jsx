@@ -2,7 +2,7 @@ import { API_OPTIONS } from "../utils/constant";
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addMoviesTrailer } from "../utils/movieSlice";
+import {  addMoviesTrailer } from "../utils/movieSlice";
 
 
 const useMovieTrailer = ({ id }) => {

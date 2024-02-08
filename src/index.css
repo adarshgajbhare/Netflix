@@ -23,7 +23,13 @@ html, body {
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.your-slider-container {
+  overflow: visible !important;
+}
 
+.slick-list {
+  overflow: visible ! important;
+}
 ::-webkit-scrollbar {
    width: 10px;
    height: 10px;

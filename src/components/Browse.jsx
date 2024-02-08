@@ -14,14 +14,15 @@ import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import TopSmallNav from "./TopSmallNav";
-
+import React from "react";
 const Browse = () => {
   const { movieCards, setMoovieCards } = useState(false);
-  console.log(movieCards);
+
   const dispatch = useDispatch();
   const video = useSelector((store) => store?.movies?.trailerVideo);
+  
   const [isVolume, setIsVolume] = useState(false);
-  console.log(video);
+
   useNowPlayingMovies();
   usePopularMovies();
   useTopMovies();
@@ -43,18 +44,15 @@ const Browse = () => {
       })
       .catch((error) => {});
   };
+
   const HandleVolume = () => {
     setIsVolume(!isVolume);
   };
 
-  const moviesYoutube = `https://www.youtube.com/embed/${
-    video?.key
-  }?rel=0&modestbranding=1&autohide=1&autoplay=1&showinfo=0&controls=0&loop=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=0&autohide=0&mute=${
-    isVolume ? "" : 1
-  }`;
+  const moviesYoutube = `https://www.youtube.com/embed/${video?.key}?rel=0&modestbranding=1&autohide=1&autoplay=1&showinfo=0&controls=0&loop=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=0&autohide=0&mute=${isVolume ? "" :1}`;
   return (
-    <div className="main-container relative w-full min-h-full overflow-x-hidden">
-      <div className="absolute inset-0 -z-10   [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
+    <div className="main-container relative w-full min-h-full overflow-x-hidden ">
+      <div className="absolute inset-0 -z-10  bg-[#131313]"></div>
       <div className="absolute h-[100vh] w-full  -z-10  inset-0  ">
         <iframe
           className="hidden 2xl:block lg:block h-full w-full object-cover scale-150 bg-gradient-to-t from-black"
@@ -73,7 +71,7 @@ const Browse = () => {
           ></i>
         </div>
       </div>
-    <TopSmallNav/>      
+      <TopSmallNav />
       <MainContainer
         original_title={original_title}
         tittle={title}
@@ -81,19 +79,16 @@ const Browse = () => {
         id={id}
         poster_path={poster_path}
       />
-      {console.log("before Sending", movieCards)}
       <SecondaryContainer isSeries={movieCards} allMovies={allMovies} />
       <div
         className="hidden 2xl:block lg:block absolute w-[500px] h-[450px] top-56 left-[55px]  gap-4 rounded-md    
         flex-col   z-[999]"
       >
         <div className="  font-bold tracking-tighter child title text-5xl overflow-hidden text-white relative p-4">
-          {/* <div className=" overlay inset-0 bg-black opacity-10 h-full w-full absolute -z-10 "> </div> */}
           {title ? title : original_title}
         </div>
 
         <div className="   child plot overflow-hidden  text-white relative p-4">
-          {/* <div className="overlay inset-0 bg-black opacity-50 h-full w-full absolute -z-10"> </div> */}
           {overview}
         </div>
 

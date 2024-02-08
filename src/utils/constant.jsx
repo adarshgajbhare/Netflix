@@ -23,10 +23,10 @@ export const TOP_RATED_MOVIES_API = `https://api.themoviedb.org/3/movie/top_rate
 export const UPCOMING_MOVIES_API = `https://api.themoviedb.org/3/movie/upcoming?page=${pageNumber}`;
 
 // TV SHOWS
-export const TOP_TV_SHOW = `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${pageNumber}`;
-export const ARRIVING_TODAY_SHOW = `https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=${pageNumber}'`;
-export const ON_AIR_SHOW = `https://api.themoviedb.org/3/tv/on_the_air?language=en-US&page=${pageNumber}`;
-export const POPULAR_SHOW = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${pageNumber}`;
+export const TOP_TV_SHOW = `https://api.themoviedb.org/3/tv/top_rated?&page=1`;
+export const ARRIVING_TODAY_SHOW = `https://api.themoviedb.org/3/tv/airing_today?&page=1`;
+export const ON_AIR_SHOW = `https://api.themoviedb.org/3/tv/on_the_air?&page=1`;
+export const POPULAR_SHOW = `https://api.themoviedb.org/3/tv/popular?&page=1`;
 
 export const SERIES_POSTER_URL =
   "https://api.themoviedb.org/3/tv/series_id/images";
@@ -40,3 +40,9 @@ export const API_OPTIONS = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMDg0MzBkZmVkMzBiMjY0Mzc2MjA5ZGUzYmVjZmE3YSIsInN1YiI6IjY1OWVhYzBlY2I3NWQxMDI1N2NlYzVlNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZuX9pdyXKBs1vQfwBqp_ueK79OIHypPxNk5y_nOAZC0",
   },
 };
+
+// Search API's
+export const  SEARCH_SHOW =`https://api.themoviedb.org/3/search/tv?query=dark&include_adult=false&language=en-US&page=1`;
+
+export const SEARCH_MOVIES = `https://api.themoviedb.org/3/search/movie?language=en-US&page=1`
+

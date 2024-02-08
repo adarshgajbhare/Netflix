@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import { signOut } from "firebase/auth";
@@ -82,9 +83,8 @@ const TvShows = () => {
         tittle={name}
         overview={overview}
         id={id}
-        poster_path={poster_path}
-      />
-      {console.log("before Sending", showCards)}
+        poster_path={poster_path}/>
+
       <SecondaryContainer isSeries={showCards} allMovies={allShows} />
       <div
         className="hidden 2xl:block lg:block absolute w-[500px] h-[450px] top-56 left-[55px]  gap-4 rounded-md    

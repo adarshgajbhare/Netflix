@@ -10,37 +10,31 @@ import { auth } from "../utils/firebase";
 import { removeUser } from "../utils/userSlice";
 import { useState } from "react";
 import useShowTrailer from "../hooks/useShowTrailer";
-
-
+import React from "react";
+import Navbar from "./Navbar";
 
 // eslint-disable-next-line react/prop-types
-  const MainPoster = ({ title, poster_path, original_title, id  }) => {
-  const user = useSelector((store) => store?.user);
-  const [isSeries, setIsSeries] =useState(false)
+const MainPoster = ({ title, poster_path, original_title, id }) => {
+  const  user = useSelector((store) => store?.user);
+  const [isSeries, setIsSeries] = useState(false);
   const video = useSelector((store) => store?.movies?.trailerVideo);
   const dispatch = useDispatch();
 
-   
   useMovieTrailer({ id });
-  useShowTrailer({id});
+  useShowTrailer({ id });
 
   const HandleSignOut = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
   };
 
-
-  const HandleTvShows = () =>{
-  
+  const HandleTvShows = () => {
     setIsSeries(!isSeries);
-   
-  }
- 
+  };
+
   return (
     <div className="p-5">
       <Tilt
@@ -52,7 +46,7 @@ import useShowTrailer from "../hooks/useShowTrailer";
         }}
         style={{}}
       >
-        <div className="mobile 2xl:hidden lg:hidden">
+        <div className="mainPoster mobile 2xl:hidden lg:hidden">
           <div className="img-container  relative rounded-xl overflow-hidden md:scale-75">
             <div className="absolute inset-0  bg-gradient-to-t  opacity-75 from-black"></div>
 
@@ -70,34 +64,47 @@ import useShowTrailer from "../hooks/useShowTrailer";
                 </button>
               </div>
             </div>
-           { isSeries ?<img className="h-full w-full " src={SERIES_POSTER_URL + poster_path} /> : <img className="h-full w-full " src={POSTER_URL + poster_path} /> } 
-          
+            {isSeries ? (
+              <img
+                className="h-full w-full "
+                src={SERIES_POSTER_URL + poster_path}
+              />
+            ) : (
+              <img className="h-full w-full " src={POSTER_URL + poster_path} />
+            )}
           </div>{" "}
         </div>
       </Tilt>
+        {/* <Navbar/>  */}
       <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block   ">
         <div
           className="img-container relative  rounded-md overflow-hidden 2xl:overflow-x-hidden md:scale-75
            2xl:scale-100 lg:scale-100 2xl:w-full 
-           2xl:h-[80vh]  lg:h-80vh]  lg:w-full ">
-        
-
+           2xl:h-[80vh]  lg:h-80vh]  lg:w-full "
+        >
           <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block ">
-            <div className="navbar z-50  w-full text-center flex justify-between items-center p-2 2xl:bg-transparent 2xl:px-6 
+            <div
+              className="navbar z-50  w-full text-center flex justify-between items-center p-2 2xl:bg-transparent 2xl:px-6 
                lg:bg-transparent lg:px-6 2xl:absolute lg:absolute   "
             >
               <div className=" 2xl:flex 2xl:items-center 2xl:gap-3 lg:flex lg:items-center lg:gap-3 ">
                 <Header />
                 <div className="invisible 2xl:visible lg:visible">
                   <ul className="text-white 2xl:font-bold xl:font-bold 2xl:flex 2xl:gap-3 lg:flex lg:gap-3 hover:cursor-pointer ">
-                  <Link to={"/Browse"}>   <li className=" hover:underline">Home</li></Link>
-                   
-                   <Link to={"/Shows"}> <li className=" hover:underline">Tv Show</li> </Link>
-                   <li className=" hover:underline">Movies</li>
+                    <Link to={"/Browse"}>
+                      {" "}
+                      <li className=" hover:underline">Home</li>
+                    </Link>
+
+                    <Link to={"/Shows"}>
+                      {" "}
+                      <li className=" hover:underline">Tv Show</li>{" "}
+                    </Link>
+                    <li className=" hover:underline">Movies</li>
                     <li className=" hover:underline">Recently Added</li>
                     <li className=" hover:underline">My List</li>
                   </ul>
-                </div> 
+                </div>
               </div>
               <div className="2xl:flex 2xl:items-center 2xl:gap-3 lg:flex lg:items-center lg:gap-3">
                 <img
@@ -109,8 +116,7 @@ import useShowTrailer from "../hooks/useShowTrailer";
               </div>
             </div>
           </div>
-          <div className="2xl:visible 2xl:w-full lg:visible lg:w-full 2xl:rounded-none ">
-          </div>
+          <div className="2xl:visible 2xl:w-full lg:visible lg:w-full 2xl:rounded-none "></div>
         </div>
       </div>
     </div>

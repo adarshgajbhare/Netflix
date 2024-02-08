@@ -1,35 +1,50 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-
-import MovieList from "./MovieList";
+import React from "react";
 import NavbarBottom from "./NavbarBottom";
+import ShowCard from "./ShowCard";
 
-const  SecondaryContainer = ({ isSeries , allMovies }) => {
 
+const SecondaryContainer = ({ isSeries, allMovies }) => {
+  
   return (
-    <> 
-   {isSeries ?
-   <div className="">
-      <MovieList title={"Popular Shows"} movies={allMovies?.popularShow} />{" "}
-      <MovieList title={"Top Rated"} movies={allMovies?.topShows} />{" "}
-      <MovieList title={"Upcoming Shows"} movies={allMovies?.onAirShow} />
-      <MovieList title={"On Air Shows "} movies={allMovies?.arrivingTodayShow} />
-      
-      <div className="h-20"></div>
-      <div className="lg:hidden 2xl:hidden">
-        <NavbarBottom />
-      </div>
-    </div>
-    :<div className="">
-      <MovieList title={"Now Playing"} movies={allMovies?.nowPlayingMovies} />{" "}
-      <MovieList title={"Popular Movies"} movies={allMovies?.popularMovies} />{" "}
-      <MovieList title={"Top Movies"} movies={allMovies?.topMovies} />
-      <MovieList title={"Upcoming Movies"} movies={allMovies?.upcomingMovies} />
-      <div className="h-20"></div>
-      <div className="lg:hidden 2xl:hidden">
-        <NavbarBottom />
-      </div>
-    </div>}
+    <>
+      {isSeries ? (
+        <div className="">
+        
+          <ShowCard title={"Top Rated"} movies={allMovies?.topShows} />{" "}
+          <ShowCard title={"Popular Shows"} movies={allMovies?.popularShow} />{" "}
+        
+          <ShowCard title={"Upcoming Shows"} movies={allMovies?.onAirShow} />
+          <ShowCard
+            title={"On Air Shows "}
+            movies={allMovies?.arrivingTodayShow}
+          />
+          <div className="lg:hidden 2xl:hidden">
+            <NavbarBottom />
+          </div>
+        </div>
+      ) : (
+        <div className="">
+          <ShowCard
+            title={"Now Playing"}
+            movies={allMovies?.nowPlayingMovies}
+          />{" "}
+          <ShowCard
+            title={"Popular Movies"}
+            movies={allMovies?.popularMovies}
+          />{" "}
+          <ShowCard title={"Top Movies"} movies={allMovies?.topMovies} />
+          <ShowCard
+            title={"Upcoming Movies"}
+            movies={allMovies?.upcomingMovies}
+          />
+          <div className="h-20"></div>
+          <div className="lg:hidden 2xl:hidden">
+            <NavbarBottom />
+          </div>
+        </div>
+      )}
     </>
   );
 };
