@@ -30,15 +30,16 @@ const SecondaryContainer = ({ isSeries, allMovies }) => {
             title={"Now Playing"}
             movies={allMovies?.nowPlayingMovies}
           />{" "}
+           <ShowCard
+            title={"Upcoming Movies"}
+            movies={allMovies?.upcomingMovies}
+          />
           <ShowCard
             title={"Popular Movies"}
             movies={allMovies?.popularMovies}
           />{" "}
           <ShowCard title={"Top Movies"} movies={allMovies?.topMovies} />
-          <ShowCard
-            title={"Upcoming Movies"}
-            movies={allMovies?.upcomingMovies}
-          />
+         
           <div className="h-20"></div>
           <div className="lg:hidden 2xl:hidden">
             <NavbarBottom />

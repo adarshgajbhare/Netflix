@@ -11,7 +11,17 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 
 const ShowCard = ({ title, movies }) => {
-  // const [, setTrailerPage] = useState(false);
+
+  const [hoveredId, setHoveredId] = useState(null);
+
+  const handleMouseEnter = (id) => {
+    setHoveredId(id);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredId(null);
+  };
+  
 
   var settings = {
     dots: false,
@@ -80,53 +90,52 @@ const ShowCard = ({ title, movies }) => {
     );
   }
 
-  // const HandlePosterTrailer = (movie) => {
-  //   setTrailerPage(true);
-  //   console.log(movie.name);
-  // };
-  const [newCard, setNewCard] = useState(false);
-  const [hoveredId, setHoveredId] = useState(null);
-
-  const handleMouseEnter = (id) => {
-    setHoveredId(id);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredId(null);
-  };
-  const HandleNewCard = () => {
-    setNewCard(true);
-    console.log("Hoverefdkfdfldlfdklfd")
-  };
-
+ 
   return (
     <>
-      <h1 className="text-white font-semibold text-2xl my-4"> {title}</h1>
-
+      <h1 className="text-white font-semibold text-2xl mt-16 mb-4"> {title}</h1>
       <div
-        className={` transition-all duration-300 ease-in-out box-slider relative   overflow-visible min-h-64  w-full 
-         gap-2 whitespace-nowrap z-0`}
+        className="mainBox transition-all duration-300 ease-in-out box-slider relative   overflow-visible min-h-64  w-full 
+         gap-2 whitespace-nowrap z-0"
       >
-        {hoveredId && <p className="text-white border-4 border-red-700 z-50">Hovered ID: {hoveredId}</p>}
-        <Slider {...settings} className="your-slider-container ">
+        <Slider {...settings} >
           {movies &&
             movies.map((movie) => (
-              <div className="card  flex max-h-64 max-w-48 relative z-10   cursor-pointer flex-shrink-0  ">
+              <div
+              key={movie.id}
+                onMouseEnter={() => handleMouseEnter(movie.id)}
+                onMouseLeave={handleMouseLeave}
+                className="card  flex max-h-64 max-w-48 relative cursor-pointer flex-shrink-0  
+              transition-all duration-300 ease-in-out"
+              >
                 <Link
                   to={`/PlayingTrailer/${
                     movie.name ? movie.name : movie.title
-                  }/${movie.id}`}>
+                  }/${movie.id}`}
+                >
                   <img
-                   
-                     alt={`Image ${movie.id}`}
-                     onMouseEnter={() => handleMouseEnter(movie.id)}
-                     onMouseLeave={handleMouseLeave}
-                    className={` card-${movie.id}  h-full w-full object-cover object-center gap-5 hover:cursor-pointer z-50 border`}
+                    alt={`Image ${movie.id}`}
+                    className={`  h-full w-full object-cover object-center border `}
                     key={movie.id}
                     src={POSTER_URL + movie.poster_path}
                   />
-                
                 </Link>
+                {hoveredId === movie.id && hoveredId !== null ? (
+                  <div
+                    className="absolute -top-[10%] scale-105  z-[999] left-[50%] -translate-x-[50%] transition-opacity duration-300 opacity-100 shadow-2xl"
+                  >
+                    <PopOver
+                    movie ={movie}
+                      id={hoveredId}
+                      poster_path={movie.poster_path}
+                      title={movie.title ? movie.title : movie.name}
+                      overview={movie.overview}
+                      backdrop_path={movie.backdrop_path}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             ))}
         </Slider>
@@ -136,6 +145,28 @@ const ShowCard = ({ title, movies }) => {
 };
 
 export default ShowCard;
- {/* <div className="absolute z-50 -top-96 left-0  flex gap-4">
+{
+  /* <div className="absolute z-50 -top-96 left-0  flex gap-4">
             <PopOver />
-          </div> */}
+          </div> */
+}
+
+{
+  /* <div className={` ${hoveredId === movie.id && hoveredId !== null ? "details flex-1 bg-[#16181f] p-4 flex flex-col gap-2"  : "details flex-1 bg-[#16181f] p-4 hidden flex-col gap-2"} `}>
+                    <div className="buttons flex w-full items-stretch gap-2">
+                      <button className="w-full grow rounded-md bg-white py-3 text-sm font-bold">
+                        Watch Now
+                      </button>
+                      <button className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center">
+                        {" "}
+                        <p className="h-fit w-fit ">+</p>
+                      </button>
+                    </div>
+                    <div className="moveInfo flex h-full flex-col  text-white gap-2">
+                      <p className="title font-bold text-lg  ">{movie.title || movie.name}</p>
+                      <p className=" overview text-[#7f87a4] text-sm  line-clamp-3 overflow-hidden w-full grow text-left pr-3">
+                        {movie.overview}
+                      </p>
+                    </div>
+                  </div> */
+}

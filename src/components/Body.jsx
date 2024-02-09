@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import TvShows from "./TvShows";
 import React from "react";
 import PlayTrailer from "./PlayTrailer";
+import Profile from "./Profile";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -22,6 +23,10 @@ const Body = () => {
     {
       path: "/PlayingTrailer/:name/:id",
       element: <PlayTrailer />,
+    },
+    {
+      path: "/profile/:username/",
+      element: <Profile />,
     },
   ]);
 

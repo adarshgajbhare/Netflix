@@ -1,25 +1,23 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
+
 import React, { useState } from "react";
 import { POSTER_URL } from "../utils/constant";
-// import PopOver from "./PopOver";
+import PopOver from "./PopOver";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import PlayTrailer from "./PlayTrailer";
+
 import { Link } from "react-router-dom";
-// import { createYoutube } from "../utils/trailerSlice";
-// import { useDispatch } from "react-redux";
-// import useTrailerPage from "../hooks/useTrailerPage";
-import { FaArrowLeft } from "react-icons/fa6";
+
 const ShowCard = ({ title, movies }) => {
-  const [, setTrailerPage] = useState(false);
+  // const [, setTrailerPage] = useState(false);
 
   var settings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 7,
+    slidesToShow: 7.5,
     slidesToScroll: 2,
     initialSlide: 0,
     prevArrow: <Arrow2 />,
@@ -82,49 +80,88 @@ const ShowCard = ({ title, movies }) => {
     );
   }
 
-  //
-  const HandlePosterTrailer = (movie) => {
-    setTrailerPage(true);
-    console.log(movie.name);
+  // const HandlePosterTrailer = (movie) => {
+  //   setTrailerPage(true);
+  //   console.log(movie.name);
+  // };
+  const [newCard, setNewCard] = useState(false);
+  const [hoveredId, setHoveredId] = useState(null);
+
+  const handleMouseEnter = (id) => {
+    setHoveredId(id);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredId(null);
+  };
+  const HandleNewCard = () => {
+    setNewCard(true);
+    console.log("Hoverefdkfdfldlfdklfd");
   };
 
   return (
     <>
-   
+      <h1 className="text-white font-semibold text-2xl my-4"> {title}</h1>
 
-      <div
-        className={` transition-all duration-300 ease-in-out box-slider relative   flex overflow-visible min-h-64  w-full  gap-2 whitespace-nowrap z-0`}
-      >
-        {/* <Slider {...settings} className="your-slider-container "> */}
+      <div 
+        className="mainBox transition-all duration-300 ease-in-out box-slider relative   overflow-visible min-h-64  w-full 
+         gap-2 whitespace-nowrap z-0" >
+        <Slider {...settings} className="your-slider-container ">
+          {movies &&
+            movies.map((movie) => (
+              <div className="card  flex max-h-64 max-w-48 relative cursor-pointer flex-shrink-0  ">
+                <Link
+                  to={`/PlayingTrailer/${
+                    movie.name ? movie.name : movie.title
+                  }/${movie.id}`}
+                >
+                  <img
+                    alt={`Image ${movie.id}`}
+                    onMouseOver={() => handleMouseEnter(movie.id)}
+                    onMouseLeave={handleMouseLeave}
+                    className={` card-${movie.id}  h-full w-full object-cover object-center  border transition-all duration-300 ease-in-out `}
+                    key={movie.id}
+                    src={POSTER_URL + movie.poster_path}
+                  />
+                  <div className={` ${hoveredId === movie.id && hoveredId !== null ? "details flex-1 bg-[#16181f] p-4 flex flex-col gap-2"  : "details flex-1 bg-[#16181f] p-4 hidden flex-col gap-2"} `}>
+                    <div className="buttons flex w-full items-stretch gap-2">
+                      <button className="w-full grow rounded-md bg-white py-3 text-sm font-bold">
+                        Watch Now
+                      </button>
+                      <button className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center">
+                        {" "}
+                        <p className="h-fit w-fit ">+</p>
+                      </button>
+                    </div>
+                    <div className="moveInfo flex h-full flex-col  text-white gap-2">
+                      <p className="title font-bold text-lg  ">{movie.title || movie.name}</p>
+                      <p className=" overview text-[#7f87a4] text-sm  line-clamp-3 overflow-hidden w-full grow text-left pr-3">
+                        {movie.overview}
+                      </p>
+                    </div>
+                  </div>
 
-        {movies &&
-          movies.map((movie) => (
-            <div className="card  flex max-h-64 max-w-48 relative z-10   cursor-pointer flex-shrink-0  ">
-              <Link
-                to={`/PlayingTrailer/${movie.name ? movie.name : movie.title}/${
-                  movie.id
-                }`}
-              >
-                <img
-                  onClick={() => {
-                    HandlePosterTrailer(movie);
-                  }}
-                  className="h-full w-full object-cover object-center gap-5 hover:scale-125 hover:duration-700 ease-in-out hover:cursor-pointer 
-                        z-50 border"
-                  key={movie.id}
-                  src={POSTER_URL + movie.poster_path}
-                />
-              </Link>
-
-              {/* <div className="absolute z-50 -top-96 left-0 ">
-                        <PopOver />
-                      </div> */}
-            </div>
-          ))}
-        {/* </Slider> */}
+                  
+                </Link>
+              </div>
+            ))}
+        </Slider>
       </div>
     </>
   );
 };
 
 export default ShowCard;
+
+
+
+
+ {/* {hoveredId === movie.id && hoveredId !== null? 
+                  <div className="absolute z-50 top-0 "> 
+                  <PopOver
+                    id={hoveredId}
+                    poster_path={movie.poster_path}
+                    title={movie.title ? movie.title : movie.name}
+                    overview={movie.overview}
+                  /></div>
+                  :""} */}

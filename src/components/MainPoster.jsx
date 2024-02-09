@@ -15,11 +15,11 @@ import Navbar from "./Navbar";
 
 // eslint-disable-next-line react/prop-types
 const MainPoster = ({ title, poster_path, original_title, id }) => {
-  const  user = useSelector((store) => store?.user);
+  const user = useSelector((store) => store?.user);
   const [isSeries, setIsSeries] = useState(false);
   const video = useSelector((store) => store?.movies?.trailerVideo);
   const dispatch = useDispatch();
-
+  
   useMovieTrailer({ id });
   useShowTrailer({ id });
 
@@ -75,7 +75,7 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
           </div>{" "}
         </div>
       </Tilt>
-        {/* <Navbar/>  */}
+      {/* <Navbar/>  */}
       <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block   ">
         <div
           className="img-container relative  rounded-md overflow-hidden 2xl:overflow-x-hidden md:scale-75
@@ -106,13 +106,31 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
                   </ul>
                 </div>
               </div>
-              <div className="2xl:flex 2xl:items-center 2xl:gap-3 lg:flex lg:items-center lg:gap-3">
-                <img
-                  onClick={HandleSignOut}
-                  className="h-10 hover:cursor-pointer"
-                  src={user?.photoURL}
-                />
-                <i className="fa-solid fa-magnifying-glass text-black text-3xl opacity-70 2xl:text-white lg:text-white hover:cursor-pointer"></i>
+              <div className="2xl:flex 2xl:items-center 2xl:gap-4 lg:flex lg:items-center lg:gap-3">
+                <div className="relative ">
+                  <img
+                    className="h-10 hover:cursor-pointer"
+                    src={user?.photoURL}
+                  />
+                  <div className=" absolute  text-xl -left-4 rounded py-1 cursor-pointer">
+                    <Link to={`/profile/${user?.displayName}`}>
+                      <p className="text-white bg-hotstar py-3  px-4 mb-2">
+                        Profile
+                      </p>
+                    </Link>
+                    <p
+                      onClick={HandleSignOut}
+                      className="text-white bg-hotstar py-3"
+                    >
+                      Sign out
+                    </p>
+                  </div>
+                </div>
+
+                <i
+                  className="fa-solid fa-magnifying-glass text-black text-3xl opacity-70 2xl:text-white
+                 lg:text-white hover:cursor-pointer"
+                ></i>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
-/* eslint-disable react/no-unescaped-entities */
-import Header from "./Header";
+import { useEffect } from "react";
+import { gsap } from "gsap"; // Import gsap from the correct package
 import { NETFLIX_BACKGROUND, USER_ICON } from "../utils/constant";
 import { useRef, useState } from "react";
 import { validateDate } from "../utils/validation";
@@ -11,7 +11,9 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import Header from "./Header";
 import React from "react";
+
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -19,6 +21,20 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const username = useRef(null);
+
+  const runAnimation = () => {
+    // Run GSAP animation
+    const tl = gsap.timeline();
+    tl.to(".overlay1", {
+      display: "none",
+      duration: 3,
+    });
+  };
+
+  useEffect(() => {
+    // Run GSAP animation when the component mounts
+    runAnimation();
+  }, []); // Empty dependency array to run only once on mount
 
   const handleValidation = () => {
     const message = !isSignInForm
@@ -57,13 +73,9 @@ const Login = () => {
             })
             .catch((error) => {
               setErrorMessage(error);
-         
             });
-   
         })
-        // eslint-disable-next-line no-unused-vars
         .catch((error) => {
-        
           setErrorMessage(
             "We’re sorry. This login email already exists. Please try a different email address to register."
           );
@@ -78,22 +90,27 @@ const Login = () => {
           // eslint-disable-next-line no-unused-vars
           const user = userCredential.user;
         })
-        // eslint-disable-next-line no-unused-vars
         .catch((error) => {
           setErrorMessage(
             "Sorry, we can't find an account with this email or password. Please try again or create a new account."
           );
         });
     }
+
+    runAnimation(); // Run animation when sign-up/sign-in button is clicked
   };
+
   const toggleSignIn = () => {
     setIsSignInForm(!isSignInForm);
+    runAnimation(); // Run animation when sign-up/sign-in button is clicked
   };
+
   return (
     <div className="w-full relative overflow-hidden bg-black min-h-[100vh] p-4 flex flex-col justify-between xl:bg-black-rgba xl:p-0">
       <img
         className="hidden -z-10 w-max-full object-cover object-center xl:block xl:h-full xl:absolute"
         src={NETFLIX_BACKGROUND}
+        alt="Netflix Background"
       />
 
       <Header />

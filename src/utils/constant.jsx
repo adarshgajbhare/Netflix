@@ -23,10 +23,10 @@ export const TOP_RATED_MOVIES_API = `https://api.themoviedb.org/3/movie/top_rate
 export const UPCOMING_MOVIES_API = `https://api.themoviedb.org/3/movie/upcoming?page=${pageNumber}`;
 
 // TV SHOWS
-export const TOP_TV_SHOW = `https://api.themoviedb.org/3/tv/top_rated?&page=1`;
-export const ARRIVING_TODAY_SHOW = `https://api.themoviedb.org/3/tv/airing_today?&page=1`;
-export const ON_AIR_SHOW = `https://api.themoviedb.org/3/tv/on_the_air?&page=1`;
-export const POPULAR_SHOW = `https://api.themoviedb.org/3/tv/popular?&page=1`;
+export const TOP_TV_SHOW = `https://api.themoviedb.org/3/tv/top_rated?&page=${pageNumber}`;
+export const ARRIVING_TODAY_SHOW = `https://api.themoviedb.org/3/tv/airing_today?&page=${pageNumber}`;
+export const ON_AIR_SHOW = `https://api.themoviedb.org/3/tv/on_the_air?&page=${pageNumber}`;
+export const POPULAR_SHOW = `https://api.themoviedb.org/3/tv/popular?&page=${pageNumber}`;
 
 export const SERIES_POSTER_URL =
   "https://api.themoviedb.org/3/tv/series_id/images";
@@ -42,7 +42,6 @@ export const API_OPTIONS = {
 };
 
 // Search API's
-export const  SEARCH_SHOW =`https://api.themoviedb.org/3/search/tv?query=dark&include_adult=false&language=en-US&page=1`;
+export const SEARCH_SHOW = `https://api.themoviedb.org/3/search/tv?query=dark&include_adult=false&language=en-US&page=1`;
 
-export const SEARCH_MOVIES = `https://api.themoviedb.org/3/search/movie?language=en-US&page=1`
-
+export const SEARCH_MOVIES = `https://api.themoviedb.org/3/search/movie?language=en-US&page=1`;
