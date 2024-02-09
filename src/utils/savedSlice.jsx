@@ -8,6 +8,7 @@ const savedSlice = createSlice({
     watchLaterMovies: [],
     watchLaterShows: [],
   },
+
   reducers: {
     addFavoriteMovies: (state, action) => {
       state.favoriteMovies = [...state.favoriteMovies, action.payload];

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/react-in-jsx-scope */
 import { useSelector } from "react-redux";
@@ -8,14 +9,12 @@ import PopOver from "./PopOver";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Navbar from "./Navbar";
 
 const Profile = () => {
   const { username } = useParams();
   const watchList = useSelector((store) => store.savedInfo.watchLaterMovies);
   const favList = useSelector((store) => store.savedInfo.favoriteMovies);
-
-
-
   
   var settings = {
     dots: false,
@@ -83,21 +82,21 @@ const Profile = () => {
       />
     );
   }
-
-
+  
   return (
     <>
-      <div className=" min-h-[100vh] bg-black w-full ">
-        <div className="navbar border py-4">
-          <Header />
+      <div className=" min-h-[100vh] bg-black w-full px-2 py-1">
+        <div className="navbar  py-4">
+          {/* <Header /> */}
+          <Navbar/>
         </div>
-        <div className="py-8 border-2 border-red-700">
-          <h1 className="text-white ">Hello there {username}</h1>
+        <div className="py-20 px-2 ">
+          {/* <h1 className="text-white ">Hello there {username}</h1> */}
           <h1 className="text-white text-2xl">Watch Later</h1>
         </div>
 
-        <div className=" h-[50vh] gap-3 relative  border-2 border-blue-500">
-        <Slider {...settings} >
+        <div className=" h-[50vh] gap-3 relative  ">
+        {/* <Slider {...settings} > */}
           {watchList && watchList.map((items) => (
             <div className="flex ">
               <PopOver
@@ -110,13 +109,13 @@ const Profile = () => {
               />
             </div>
           ))}
-          </Slider>
+          {/* </Slider> */}
         </div>
-        <div className="py-8 border-2 border-red-700">
+        <div className="px-2">
         
-          <h1 className="text-white text-2xl">Favourite Movies and Shows</h1>
+          <h1 className="text-white text-2xl">Favourite Movies </h1>
         </div>
-        <div className=" h-[50vh] gap-3 flex border-2 border-blue-500">
+        <div className=" h-[50vh] gap-3 flex ">
           {favList && favList.map((items) => (
             <div className="flex ">
               <PopOver

@@ -4,7 +4,6 @@ import React from "react";
 
 
 const MoviesCard = ({ poster_path }) => {
-  // if added margin mt-[500px]  images are going out of the box getting expected result but the gap is to much between div of cards
   return (
     <div className=" rounded-md w-[28%] h-55 flex-shrink-0  border-2  overflow-visible snap-start  2xl:h-[450px] 2xl:w-[300px] lg:h-[400px] 
     lg:w-[250px] ">

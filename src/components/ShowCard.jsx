@@ -145,28 +145,3 @@ const ShowCard = ({ title, movies }) => {
 };
 
 export default ShowCard;
-{
-  /* <div className="absolute z-50 -top-96 left-0  flex gap-4">
-            <PopOver />
-          </div> */
-}
-
-{
-  /* <div className={` ${hoveredId === movie.id && hoveredId !== null ? "details flex-1 bg-[#16181f] p-4 flex flex-col gap-2"  : "details flex-1 bg-[#16181f] p-4 hidden flex-col gap-2"} `}>
-                    <div className="buttons flex w-full items-stretch gap-2">
-                      <button className="w-full grow rounded-md bg-white py-3 text-sm font-bold">
-                        Watch Now
-                      </button>
-                      <button className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center">
-                        {" "}
-                        <p className="h-fit w-fit ">+</p>
-                      </button>
-                    </div>
-                    <div className="moveInfo flex h-full flex-col  text-white gap-2">
-                      <p className="title font-bold text-lg  ">{movie.title || movie.name}</p>
-                      <p className=" overview text-[#7f87a4] text-sm  line-clamp-3 overflow-hidden w-full grow text-left pr-3">
-                        {movie.overview}
-                      </p>
-                    </div>
-                  </div> */
-}

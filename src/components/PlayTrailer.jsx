@@ -19,17 +19,13 @@ const PlayTrailer = () => {
 
   const moviesYoutube = `https://www.youtube.com/embed/${video?.key}?rel=0&modestbranding=1&autoplay=1&showinfo=0&controls=1&loop=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=0&autohide=1&mute=1&playsinline=1&enablejsapi=1`;
 
-  // console.log("Movie here", moviesYoutube);
-  // console.log("series here", tvTrailer);
-
-  // console.log("movies key", video?.key);
-  // console.log("series key", seriesTrailer?.key);
+  
 
   let showResult = tvTrailer.includes("undefined");
-  console.log("series is undefined", showResult);
+
 
   let movieResult = moviesYoutube.includes("undefined");
-  console.log("movie is undefined", movieResult);
+
 
   if(movieResult && showResult) return;
 

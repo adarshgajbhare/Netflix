@@ -17,9 +17,10 @@ import Navbar from "./Navbar";
 const MainPoster = ({ title, poster_path, original_title, id }) => {
   const user = useSelector((store) => store?.user);
   const [isSeries, setIsSeries] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const video = useSelector((store) => store?.movies?.trailerVideo);
   const dispatch = useDispatch();
-  
+
   useMovieTrailer({ id });
   useShowTrailer({ id });
 
@@ -106,13 +107,25 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
                   </ul>
                 </div>
               </div>
-              <div className="2xl:flex 2xl:items-center 2xl:gap-4 lg:flex lg:items-center lg:gap-3">
-                <div className="relative ">
+              <div className="2xl:flex 2xl:items-center 2xl:gap-5 lg:flex lg:items-center lg:gap-3">
+                <i
+                  className="fa-solid fa-magnifying-glass text-black text-3xl opacity-70 2xl:text-white
+                 lg:text-white hover:cursor-pointer"
+                ></i>{" "}
+                <div
+                  className="relative "
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
                   <img
                     className="h-10 hover:cursor-pointer"
                     src={user?.photoURL}
                   />
-                  <div className=" absolute  text-xl -left-4 rounded py-1 cursor-pointer">
+                  <div
+                    className={` absolute  text-xl -left-4 rounded py-1 cursor-pointer ${
+                      isHovered ? "" : "hidden"
+                    } `}
+                  >
                     <Link to={`/profile/${user?.displayName}`}>
                       <p className="text-white bg-hotstar py-3  px-4 mb-2">
                         Profile
@@ -126,11 +139,6 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
                     </p>
                   </div>
                 </div>
-
-                <i
-                  className="fa-solid fa-magnifying-glass text-black text-3xl opacity-70 2xl:text-white
-                 lg:text-white hover:cursor-pointer"
-                ></i>
               </div>
             </div>
           </div>
