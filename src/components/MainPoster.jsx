@@ -76,8 +76,11 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
           </div>{" "}
         </div>
       </Tilt>
-      {/* <Navbar/>  */}
-      <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block   ">
+      <div className="">
+       
+        <Navbar />
+      </div>
+      {/* <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block   ">
         <div
           className="img-container relative  rounded-md overflow-hidden 2xl:overflow-x-hidden md:scale-75
            2xl:scale-100 lg:scale-100 2xl:w-full 
@@ -144,7 +147,7 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
           </div>
           <div className="2xl:visible 2xl:w-full lg:visible lg:w-full 2xl:rounded-none "></div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

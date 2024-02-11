@@ -1,135 +1,78 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/react-in-jsx-scope */
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import Header from "./Header";
-
-import PopOver from "./PopOver";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Navbar from "./Navbar";
+import { React, useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { database } from "../utils/firebase";
+import ShowCard from "./ShowCard";
 
 const Profile = () => {
-  const { username } = useParams();
-  const watchList = useSelector((store) => store.savedInfo.watchLaterMovies);
-  const favList = useSelector((store) => store.savedInfo.favoriteMovies);
-  
-  var settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 7.5,
-    slidesToScroll: 2,
-    initialSlide: 0,
-    prevArrow: <Arrow2 />,
-    nextArrow: <Arrow />,
-  };
-  function Arrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          overflow: "visible",
-          marginTop: "60px",
-          marginRight: "35px",
-          scale: "2",
-          zIndex: 999,
-          paddingTop: "3rem",
-          paddingBottom: "3.5rem",
-          textAlign: "center",
-          height: "fit-content",
-          width: "fit-content",
-          color: "red",
-          background: "black",
-          opacity: "0.5",
-          borderBottomLeftRadius: "0.5rem",
-          borderTopLeftRadius: "0.5rem",
-        }}
-        onClick={onClick}
-      />
-    );
-  }
+  const userEmail = useSelector((store) => store.user?.email);
+  const [watchLaterData, setWatchLaterData] = useState([]);
+  const [favoriteData, setFavoriteData] = useState([]);
 
-  function Arrow2(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          overflow: "visible",
-          marginTop: "60px",
-          marginLeft: "35px",
-          scale: "2",
-          zIndex: 999,
-          paddingTop: "3rem",
-          paddingBottom: "3.5rem",
-          textAlign: "center",
-          height: "fit-content",
-          width: "fit-content",
-          color: "red",
-          background: "black",
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const watchLaterCollection = collection(database, "WatchLater");
+        const favoriteCollection = collection(database, "Favorite");
 
-          opacity: "0.5",
-          borderBottomRightRadius: "0.5rem",
-          borderTopRightRadius: "0.5rem",
-        }}
-        onClick={onClick}
-      />
-    );
-  }
-  
+        const watchLaterSnapshot = await getDocs(watchLaterCollection);
+        const favoriteSnapshot = await getDocs(favoriteCollection);
+
+        const watchLaterData = watchLaterSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          email: doc.data().email,
+          ...doc.data().movies,
+        }));
+
+        const favoriteData = favoriteSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          email: doc.data().email,
+          ...doc.data().movies,
+        }));
+
+        const filterWatchLater = watchLaterData.filter(
+          (item) => userEmail == item.email
+        );
+
+        const filterFavorite = favoriteData.filter(
+          (item) => userEmail == item.email
+        );
+
+        setWatchLaterData(filterWatchLater);
+        setFavoriteData(filterFavorite);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
-      <div className=" min-h-[100vh] bg-black w-full px-2 py-1">
-        <div className="navbar  py-4">
-          {/* <Header /> */}
-          <Navbar/>
-        </div>
-        <div className="py-20 px-2 ">
-          {/* <h1 className="text-white ">Hello there {username}</h1> */}
-          <h1 className="text-white text-2xl">Watch Later</h1>
+      <div className=" bg-black w-full min-h-[130vh] ">
+        <div className="navbar py-4  h-14">
+          <Navbar />
         </div>
 
-        <div className=" h-[50vh] gap-3 relative  ">
-        {/* <Slider {...settings} > */}
-          {watchList && watchList.map((items) => (
-            <div className="flex ">
-              <PopOver
-                movies={watchList}
-                id={items?.id}
-                poster_path={items?.poster_path}
-                title={items?.title}
-                overview={items?.overview}
-                backdrop_path={items?.backdrop_path}
-              />
-            </div>
-          ))}
-          {/* </Slider> */}
+        <div className="">
+          {watchLaterData && watchLaterData.length > 0 ? (
+            <ShowCard title={"Watch Later .."} movies={watchLaterData} />
+          ) : (
+            " "
+          )}
         </div>
-        <div className="px-2">
-        
-          <h1 className="text-white text-2xl">Favourite Movies </h1>
+
+        <div className="   ">
+          {favoriteData && favoriteData.length > 0 ? (
+            <ShowCard title={"Your Favorites.."} movies={favoriteData} />
+          ) : (
+            " "
+          )}
         </div>
-        <div className=" h-[50vh] gap-3 flex ">
-          {favList && favList.map((items) => (
-            <div className="flex ">
-              <PopOver
-                movies={favList}
-                id={items?.id}
-                poster_path={items?.poster_path}
-                title={items?.title}
-                overview={items?.overview}
-                backdrop_path={items?.backdrop_path}
-              />
-            </div>
-          ))}
-        </div>
-      
       </div>
     </>
   );

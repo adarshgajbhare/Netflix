@@ -95,7 +95,7 @@ const TvShows = () => {
           {name ? name : original_name}
         </div>
 
-        <div className="   child plot overflow-hidden  text-white relative p-4">
+        <div className="   child plot overflow-hidden  text-white relative p-4 ">
           {/* <div className="overlay inset-0 bg-black opacity-50 h-full w-full absolute -z-10"> </div> */}
           {series ? tvShows[1] && tvShows[1].overview : overview}
         </div>

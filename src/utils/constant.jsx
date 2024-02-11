@@ -47,8 +47,8 @@ export const API_OPTIONS = {
 // Search API's
 export const SEARCH_SHOW = `${BASE_URL}search/tv?query=dark&include_adult=false&language=en-US&page=1`;
 
-export const SEARCH_MOVIES = `${BASE_URL}search/movie?language=en-US&page=1`;
- 'https://api.themoviedb.org/3/search/movie?query=dark&include_adult=false&language=en-US&page=1'
+export const SEARCH_MOVIES = `${BASE_URL}search/movie?query=dark&include_adult=false&language=en-US&page=1`;
+
 
 // Genre API
 export const MOVIE_GENRE = `${BASE_URL}genre/movie/list?language=en`;
@@ -210,3 +210,8 @@ const showGenre_LIST = [
     ],
   },
 ];
+
+
+//Recommendation 
+
+const     REC_API = `https://api.themoviedb.org/3/movie/movie_id/recommendations?language=en-US&page=1'`

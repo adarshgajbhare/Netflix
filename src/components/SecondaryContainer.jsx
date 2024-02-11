@@ -12,7 +12,7 @@ const SecondaryContainer = ({ isSeries, allMovies }) => {
       {isSeries ? (
         <div className="">
         
-          <ShowCard title={"Top Rated"} movies={allMovies?.topShows} />{" "}
+          <ShowCard  title={"Top Rated"} movies={allMovies?.topShows} />{" "}
           <ShowCard title={"Popular Shows"} movies={allMovies?.popularShow} />{" "}
         
           <ShowCard title={"Upcoming Shows"} movies={allMovies?.onAirShow} />

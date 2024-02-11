@@ -15,12 +15,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import TopSmallNav from "./TopSmallNav";
 import React from "react";
+import Recommendations from "./Recommendations";
 const Browse = () => {
   const { movieCards, setMoovieCards } = useState(false);
 
   const dispatch = useDispatch();
   const video = useSelector((store) => store?.movies?.trailerVideo);
-  
+
   const [isVolume, setIsVolume] = useState(false);
 
   useNowPlayingMovies();
@@ -49,9 +50,16 @@ const Browse = () => {
     setIsVolume(!isVolume);
   };
 
-  const moviesYoutube = `https://www.youtube.com/embed/${video?.key}?rel=0&modestbranding=1&autohide=1&autoplay=1&showinfo=0&controls=0&loop=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=0&autohide=0&mute=${isVolume ? "" :1}`;
+  const moviesYoutube = `https://www.youtube.com/embed/${
+    video?.key
+  }?rel=0&modestbranding=1&autohide=1&autoplay=1&showinfo=0&controls=0&loop=1&modestbranding=1&fs=0&cc_load_policy=0&iv_load_policy=0&autohide=0&mute=${
+    isVolume ? "" : 1
+  }`;
   return (
+    <> 
+   
     <div className="main-container relative w-full min-h-full overflow-x-hidden ">
+       
       <div className="absolute inset-0 -z-10  bg-[#131313]"></div>
       <div className="absolute h-[100vh] w-full  -z-10  inset-0  ">
         <iframe
@@ -88,11 +96,11 @@ const Browse = () => {
           {title ? title : original_title}
         </div>
 
-        <div className="   child plot overflow-hidden  text-white relative p-4">
+        <div className=" overflow-hidden  text-white relative p-4 ">
           {overview}
         </div>
 
-        <div className=" gap-4  flex items-center overflow-hidden bg-transparent px-4">
+        <div className=" gap-4  flex items-center overflow-hidden bg-transparent ">
           <div className="grow ">
             <button className="bg-hotstar font-bold text-md rounded-md  text-white bg-transparent  items-center justify-center  py-4 w-full">
               <i className="fa-solid fa-play mr-2 text-xl hover:text-5xl"></i>{" "}
@@ -119,6 +127,7 @@ const Browse = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 export default Browse;

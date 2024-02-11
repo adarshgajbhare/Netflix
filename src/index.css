@@ -9,9 +9,12 @@ html, body {
 }
 
 .bg-glass {
-   background: rgba(255, 255, 255, 0.1);
-   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px 0px;
-   backdrop-filter: blur(100px);
+  background: rgba(151, 151, 151, 0.54);
+  border: 1px solid rgba(255, 255, 255, 0.41);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
 }
 .bg-hotstar {
    background: rgba(255, 255, 255, 0.1);
@@ -55,5 +58,6 @@ html, body {
       scrollbar-width: none;  /* Firefox */
 }
 }
+
 
 

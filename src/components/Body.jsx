@@ -5,6 +5,7 @@ import TvShows from "./TvShows";
 import React from "react";
 import PlayTrailer from "./PlayTrailer";
 import Profile from "./Profile";
+import Search from "./Search";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -27,6 +28,10 @@ const Body = () => {
     {
       path: "/profile/:username/",
       element: <Profile />,
+    },
+    {
+      path: "/search",
+      element: <Search />,
     },
   ]);
 

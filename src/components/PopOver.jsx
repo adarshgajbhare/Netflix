@@ -1,10 +1,14 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+
+import React, {  useState } from "react";
 import { POSTER_URL } from "../utils/constant";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFavoriteMovies, addWatchLaterMovies } from "../utils/savedSlice";
- import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { addDoc, collection } from "firebase/firestore";
+import { database } from "../utils/firebase";
+import gsap from "gsap";
+import Recommendations from "./Recommendations";
 const PopOver = ({
   movie,
   id,
@@ -13,50 +17,85 @@ const PopOver = ({
   overview,
   backdrop_path,
 }) => {
+  const WatchLater = collection(database, "WatchLater");
+  const Favorite = collection(database, "Favorite");
+
+  const [isClicked, setIsClicked] = useState(false);
   const dispatch = useDispatch();
 
+  const email = useSelector((store) => store.user.email);
+
   const HandleWatchLater = () => {
+    setIsClicked(true);
     dispatch(addWatchLaterMovies(movie));
+    addDoc(WatchLater, { movies: movie, email: email });
   };
   const HandleFavorite = () => {
+    setIsClicked(true);
     dispatch(addFavoriteMovies(movie));
+    addDoc(Favorite, { movies: movie, email: email });
   };
-
+  // const HandleHover = (shape) => {
+  //   console.log("shape is ", "" + shape);
+  //   gsap.to(`${shape}`, {
+  //     rotate: 360,
+  //     scale: 1.2,
+  //     duration: 0.2,
+  //   });
+  // };
+  const HandleRec = () => {
+    <Recommendations vis={true} />;
+    document.querySelector(".main-rec").classList.remove("hidden");
+  };
   return (
     <>
-      <div className="card  flex h-[330px] w-[390px] flex-col overflow-hidden rounded-xl ">
+      <div className="popMain flex h-[330px] w-[390px] flex-col overflow-hidden rounded-xl">
         <div className="img flex-1 overflow-hidden">
-          <img className=" " src={backdrop_path ?  POSTER_URL + backdrop_path : POSTER_URL + poster_path} />
+          <img
+            className=" "
+            src={
+              backdrop_path
+                ? POSTER_URL + backdrop_path
+                : POSTER_URL + poster_path
+            }
+          />
         </div>
 
         <div className="  details flex-1 bg-glass p-4 flex flex-col gap-2">
-          <div className="buttons flex w-full items-stretch gap-2">
-                 <Link
-                 className="w-full grow rounded-md bg-white py-3 text-sm font-bold"
-                  to={`/PlayingTrailer/${
-                    movie.name ? movie.name : movie.title
-                  }/${movie.id}`}
-                >  <button className="w-full grow rounded-md bg-white py-1 text-sm font-bold">
-              Watch Now
-            </button>
-            </Link>
-            <button
-              onClick={HandleWatchLater}
-              className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center"
+          <div className="action-list flex justify-evenly items-stretch gap-2 w-ful">
+            <div
+              className="button flex-1  bg-[#b91c1cfe] backdrop-blur-2xl text-center text-xl py-3
+          text-white font-bold rounded-md"
             >
-              <p className="h-fit w-fit ">+</p>
-            </button>
-            <button
-              onClick={HandleFavorite}
-              className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center"
-            >
-              <i className="fa-regular fa-heart text-red-500 "></i>
-            </button>
-          </div>
+              <Link className="" to={`/PlayingTrailer/${title}/${id}`}>
+                {" "}
+                <i className="fa-solid fa-play"></i>
+              </Link>{" "}
+            </div>
 
+            <div
+              onClick={HandleRec}
+              className="button flex-1 bg-[#b91c1cfe] backdrop-blur-2xl text-center text-xl py-3 text-white font-bold rounded-md"
+            >
+              <i className="fa-solid fa-clone rec"></i>
+            </div>
+            <div    onClick={HandleFavorite}
+              disabled={isClicked} className="ag button  flex-1 bg-[#b91c1cfe] backdrop-blur-2xl  text-center text-xl py-3 text-white font-bold rounded-md">
+              {/* onMouseOver={HandleHover("\".ag\"")} */}
+              <i className="fa-solid fa-heart  hover:animate-spin anima"></i>
+            </div>
+            <div onClick={HandleWatchLater}
+              disabled={isClicked}
+            
+            className="button flex-1 bg-[#b91c1cfe] backdrop-blur-2xl  text-center text-xl py-3 text-white font-bold rounded-md">
+              <i className="fa-solid fa-plus"></i>
+            </div>
+          </div>
           <div className="moveInfo flex h-full flex-col  text-white gap-2 w-full overflow-hidden">
-            <p className="title font-bold text-lg  h-fit w-full ">{title ? title : "Title Not Available"}</p>
-            <p className=" overview text-[#7f87a4] text-sm min-w-0  h-full overflow-hidden whitespace-pre-wrap  line-clamp-2 grow text-left ">
+            <p className="title font-bold text-lg  h-fit w-full ">
+              {title ? title : "Title Not Available"}
+            </p>
+            <p className=" overview text-white text-sm min-w-0  h-full overflow-hidden whitespace-pre-wrap  line-clamp-2 grow text-left ">
               {overview ? overview : "Overview Not Available"}
             </p>
           </div>
@@ -67,3 +106,32 @@ const PopOver = ({
 };
 
 export default PopOver;
+
+{
+  /* <div className="buttons flex w-full items-stretch gap-2">
+            <Link
+              className="w-full grow rounded-md bg-white py-3 text-sm font-bold"
+              to={`/PlayingTrailer/${title}/${id}`}
+            >
+              {" "}
+              <button className="w-full grow rounded-md bg-white py-1 text-sm font-bold">
+                Watch Now
+              </button>
+            </Link>
+            <button
+              onClick={HandleWatchLater}
+              disabled={isClicked}
+              className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center"
+            >
+              <p className="h-fit w-fit ">+</p>
+            </button>
+            <button
+              onClick={HandleFavorite}
+              disabled={isClicked}
+              className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center"
+            >
+              <i className="fa-regular fa-heart text-red-500 "></i>
+            </button>
+            
+          </div> */
+}
