@@ -4,8 +4,13 @@ import "slick-carousel/slick/slick-theme.css";
 import Navbar from "./Navbar";
 import { React, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { database } from "../utils/firebase";
+import { auth, database } from "../utils/firebase";
 import ShowCard from "./ShowCard";
+import NavbarBottom from "./NavbarBottom";
+import TopSmallNav from "./TopSmallNav";
+import Header from "./Header";
+import { signOut } from "firebase/auth";
+import { removeUser } from "../utils/userSlice";
 
 const Profile = () => {
   const userEmail = useSelector((store) => store.user?.email);
@@ -50,14 +55,34 @@ const Profile = () => {
 
     fetchData();
   }, []);
+  const HandleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        dispatchEvent(removeUser());
+      })
+      .catch((error) => {});
+  };
 
   return (
     <>
       <div className=" bg-black w-full min-h-[130vh] ">
-        <div className="navbar py-4  h-14">
+        <div className="navbar py-4  h-14 hidden 2xl:block lg:block md:block">
           <Navbar />
         </div>
+        <div className="mobile 2xl:hidden lg:hidden md:hidden ">
+          <div className="navbar z-50 bg-glass fixed w-full text-center flex justify-between items-center mb-56 p-2">
+            <Header />
 
+            <i  onClick={HandleSignOut}
+              className="fa-solid fa-power-off text-white text-3xl pr-2"
+            >
+
+            </i>
+          </div>
+        </div>{" "}
+        <div className="relative w-full border-2 bg-black border-black">
+          <TopSmallNav />
+        </div>
         <div className="">
           {watchLaterData && watchLaterData.length > 0 ? (
             <ShowCard title={"Watch Later .."} movies={watchLaterData} />
@@ -65,13 +90,15 @@ const Profile = () => {
             " "
           )}
         </div>
-
         <div className="   ">
           {favoriteData && favoriteData.length > 0 ? (
             <ShowCard title={"Your Favorites.."} movies={favoriteData} />
           ) : (
             " "
           )}
+        </div>
+        <div className="2xl:hidden lg:hidden md:hidden">
+          <NavbarBottom />
         </div>
       </div>
     </>

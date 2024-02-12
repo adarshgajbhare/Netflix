@@ -17,15 +17,8 @@ const TopSmallNav = () => {
         </Link>
         <Link to={"/"}>
           <button className="flex-1 rounded-[100vw] border-2 py-2 px-1  w-min-0 text-center">
-            <select className="text-white bg-black border-none rounded-sm text-center">
-              <option disabled defaultValue={"Categories"} value="Categories">Categories</option>
-              <option value="Action">Action & Adventure</option>
-              <option value="Anime">Anime </option>
-              <option value="Children">Children & Family</option>
-              <option value="Horror">Horror</option>
-              <option value="Sci-fi">Sci-fi & Fantasy</option>
-              <option value="Thrillers">Thrillers</option>
-            </select>
+             Category
+            
           </button>
         </Link>
       </div>

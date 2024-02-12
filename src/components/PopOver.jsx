@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { POSTER_URL } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavoriteMovies, addWatchLaterMovies } from "../utils/savedSlice";
@@ -22,7 +22,7 @@ const PopOver = ({
 
   const [isClicked, setIsClicked] = useState(false);
   const dispatch = useDispatch();
-
+  
   const email = useSelector((store) => store.user.email);
 
   const HandleWatchLater = () => {
@@ -61,11 +61,11 @@ const PopOver = ({
           />
         </div>
 
-        <div className="  details flex-1 bg-glass p-4 flex flex-col gap-2">
+        <div className=" details flex-1 bg-glass p-4 flex flex-col gap-2">
           <div className="action-list flex justify-evenly items-stretch gap-2 w-ful">
             <div
               className="button flex-1  bg-[#b91c1cfe] backdrop-blur-2xl text-center text-xl py-3
-          text-white font-bold rounded-md"
+               text-white font-bold rounded-md"
             >
               <Link className="" to={`/PlayingTrailer/${title}/${id}`}>
                 {" "}
@@ -79,15 +79,19 @@ const PopOver = ({
             >
               <i className="fa-solid fa-clone rec"></i>
             </div>
-            <div    onClick={HandleFavorite}
-              disabled={isClicked} className="ag button  flex-1 bg-[#b91c1cfe] backdrop-blur-2xl  text-center text-xl py-3 text-white font-bold rounded-md">
+            <div
+              onClick={HandleFavorite}
+              disabled={isClicked}
+              className="ag button  flex-1 bg-[#b91c1cfe] backdrop-blur-2xl  text-center text-xl py-3 text-white font-bold rounded-md"
+            >
               {/* onMouseOver={HandleHover("\".ag\"")} */}
               <i className="fa-solid fa-heart  hover:animate-spin anima"></i>
             </div>
-            <div onClick={HandleWatchLater}
+            <div
+              onClick={HandleWatchLater}
               disabled={isClicked}
-            
-            className="button flex-1 bg-[#b91c1cfe] backdrop-blur-2xl  text-center text-xl py-3 text-white font-bold rounded-md">
+              className="button flex-1 bg-[#b91c1cfe] backdrop-blur-2xl  text-center text-xl py-3 text-white font-bold rounded-md"
+            >
               <i className="fa-solid fa-plus"></i>
             </div>
           </div>
@@ -101,37 +105,10 @@ const PopOver = ({
           </div>
         </div>
       </div>
+
+      
     </>
   );
 };
 
 export default PopOver;
-
-{
-  /* <div className="buttons flex w-full items-stretch gap-2">
-            <Link
-              className="w-full grow rounded-md bg-white py-3 text-sm font-bold"
-              to={`/PlayingTrailer/${title}/${id}`}
-            >
-              {" "}
-              <button className="w-full grow rounded-md bg-white py-1 text-sm font-bold">
-                Watch Now
-              </button>
-            </Link>
-            <button
-              onClick={HandleWatchLater}
-              disabled={isClicked}
-              className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center"
-            >
-              <p className="h-fit w-fit ">+</p>
-            </button>
-            <button
-              onClick={HandleFavorite}
-              disabled={isClicked}
-              className="rounded-md bg-white px-4 py-2 text-3xl font-semibold flex justify-center items-center"
-            >
-              <i className="fa-regular fa-heart text-red-500 "></i>
-            </button>
-            
-          </div> */
-}
