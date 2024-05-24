@@ -83,9 +83,12 @@ const Profile = () => {
         <div className="relative w-full border-2 bg-black border-black">
           <TopSmallNav />
         </div>
-        <div className="">
+        <div>
+          <h1 className="text-white font-bold text-3xl my-3 ml-6">Welcom back, User</h1>
+        </div>
+        <div className="my-3">
           {watchLaterData && watchLaterData.length > 0 ? (
-            <ShowCard title={"Watch Later .."} movies={watchLaterData} />
+            <ShowCard title={"Watch later"} movies={watchLaterData} />
           ) : (
             " "
           )}

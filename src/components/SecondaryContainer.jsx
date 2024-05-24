@@ -25,7 +25,7 @@ const SecondaryContainer = ({ isSeries, allMovies }) => {
           </div>
         </div>
       ) : (
-        <div className="">
+        <div className="flex flex-col gap-6 bg-black relative ">
           <ShowCard
             title={"Now Playing"}
             movies={allMovies?.nowPlayingMovies}
