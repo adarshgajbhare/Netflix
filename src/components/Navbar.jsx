@@ -64,18 +64,18 @@ const Navbar = () => {
             />
 
             <div
-              className={`absolute text-xs  rounded p-2 flex flex-col gap-2 bg-[#131313]  cursor-pointer ${
+              className={`absolute text-lg z-50 right-4 top-12  rounded flex flex-col gap-2 bg-[#131313]  cursor-pointer ${
                 isHovered ? "" : "hidden"
               }  transition-all duration-200 ease-in`}
             >
               <Link to={`/profile/${user?.displayName}`}>
-                <p className="text-white flex-1 w-full text-left font-semibold ">
+                <p className="text-white border-b border-white/10 px-4 py-2  flex-1 w-full text-left font-semibold ">
                   Profile
                 </p>
               </Link>
               <p
                 onClick={HandleSignOut}
-                className="text-white whitespace-nowrap flex-1 w-full text-left font-semibold "
+                className="text-white border-b border-white/10 px-4 py-2 whitespace-nowrap flex-1 w-full text-left font-semibold "
               >
                 Sign out
               </p>

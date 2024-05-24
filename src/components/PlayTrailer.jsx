@@ -7,6 +7,13 @@ import useMovieYT from "../hooks/useMovieYT";
 import Navbar from "./Navbar";
 import useRecommendation from "../hooks/useRecommendation";
 import ShowCard from "./ShowCard";
+
+
+
+
+
+
+
 const PlayTrailer = () => {
   const { name, id } = useParams();
   const recData = useSelector((store) => store.movies);
@@ -29,34 +36,37 @@ const PlayTrailer = () => {
 
   return (
     <>
-      <div className="bg-black relative">
+      <div className="min-h-dvh bg-black relative overflow-x-hidden">
         <div className="h-20 ">
           <Navbar />
         </div>
-        <div className=" h-[85vh] w-[100vw]  -z-10  inset-0  ">
+        <h1 className="text-white font-bold text-3xl mb-3 ml-6">
+   Trailer
+      </h1>
+        <div className="lg:h-screen md:h-screen xl:h-screen 2xl:h-screen h-[40vh] w-full  mx-auto">
           <iframe
-            className="2xl:block lg:block h-full w-full object-cover bg-gradient-to-t from-black"
+            className="2xl:block lg:block h-full aspect-video w-full object-cover bg-gradient-to-t from-black"
             src={!movieResult ? moviesYoutube : tvTrailer}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
           ></iframe>
         </div>
-        <div className="recommendations mb-28 ">
+        <div className="recommendations py-16">
           {recData &&
-          recData.addRecommendations &&
-          recData.addRecommendations.length > 0 ? (
+            recData.addRecommendations &&
+            recData.addRecommendations.length > 0 ? (
             <ShowCard
-              title="Recommended for you.."
+              title="Your Recommedations"
               movies={recData.addRecommendations}
             />
           ) : (
             ""
           )}
           {recSeries &&
-          recSeries.seriesJson &&
-          recSeries.seriesJson.length > 0 ? (
+            recSeries.seriesJson &&
+            recSeries.seriesJson.length > 0 ? (
             <ShowCard
-              title="Recommended for you.."
+              title="Your recommedations"
               movies={recSeries.seriesJson}
             />
           ) : (
