@@ -80,7 +80,7 @@ const Profile = () => {
             </i>
           </div>
         </div>{" "}
-        <div className="relative w-full border-2 bg-black border-black">
+        <div className="relative w-full">
           <TopSmallNav />
         </div>
         <div>
