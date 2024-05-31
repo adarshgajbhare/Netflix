@@ -60,7 +60,7 @@ const Browse = () => {
     <>
       <div className="main-container relative w-full min-h-full overflow-x-hidden ">
         <div className="absolute inset-0 -z-10  bg-[#131313]"></div>
-        <div className="absolute h-full w-full  -z-10  inset-0  ">
+        <div className="absolute h-full  w-full  -z-10  inset-0  ">
           <div className="absolute inset-0 size-full bg-gradient-to-r from-black to-black/10 z-50">
             
           </div>
@@ -96,15 +96,15 @@ const Browse = () => {
         />
         <SecondaryContainer isSeries={movieCards} allMovies={allMovies} />
         <div
-          className="hidden 2xl:block lg:block   absolute w-2/5   xl:flex   top-36 left-10  gap-5  rounded-md    
+          className="hidden 2xl:block lg:block   absolute w-1/3   xl:flex   top-44 left-10  gap-5  rounded-md    
         flex-col   z-[999]"
         >
           <div className="  font-bold tracking-tight child title text-6xl overflow-hidden text-white relative">
             {title ? title : original_title}
           </div>
 
-          <div className=" overflow-hidden  text-white/70 text-xl text-balance font-semibold  relative ">
-            {overview.split(" ").slice(0, 35).join(" ") + "..."}
+          <div className=" overflow-hidden  text-white/70 text-xl text-pretty font-semibold  relative w-full ">
+            {overview.split(" ").slice(0, 50).join(" ") + "..."}
           </div>
 
           <div className=" gap-4  flex items-center overflow-hidden bg-transparent ">
