@@ -40,8 +40,10 @@ const Navbar = () => {
                 {" "}
                 <li className=" hover:underline">Movies</li>{" "}
               </Link>
-              <li className=" hover:underline">Recently Added</li>
-            <a href="#top-rated">   <li className=" hover:underline">My List</li></a>
+              <Link to={"/search"}>
+                {" "}
+                <li className=" hover:underline">Search</li>{" "}
+              </Link>
             </ul>
           </div>
         </div>
@@ -64,7 +66,7 @@ const Navbar = () => {
             />
 
             <div
-              className={`absolute text-lg z-50 right-4 top-12  rounded flex flex-col gap-2 bg-[#131313]  cursor-pointer ${
+              className={`absolute text-lg z-50 right-4 top-[75px]  rounded flex flex-col gap-2 bg-[#131313]  cursor-pointer ${
                 isHovered ? "" : "hidden"
               }  transition-all duration-200 ease-in`}
             >
@@ -83,7 +85,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-     
+
       <GapContainer />
     </div>
   );

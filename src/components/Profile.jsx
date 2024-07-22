@@ -16,6 +16,8 @@ const Profile = () => {
   const userEmail = useSelector((store) => store.user?.email);
   const [watchLaterData, setWatchLaterData] = useState([]);
   const [favoriteData, setFavoriteData] = useState([]);
+  const userName = useSelector((store) => store.user?.displayName);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +86,7 @@ const Profile = () => {
           <TopSmallNav />
         </div>
         <div>
-          <h1 className="text-white font-bold text-3xl my-3 ml-6">Welcom back, User</h1>
+          <h1 className="text-white font-bold text-3xl my-3 ml-6">Welcom back, {userName} </h1>
         </div>
         <div className="my-3">
           {watchLaterData && watchLaterData.length > 0 ? (

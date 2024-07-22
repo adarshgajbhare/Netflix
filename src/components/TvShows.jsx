@@ -15,6 +15,7 @@ import TopSmallNav from "./TopSmallNav";
 import usePopularShows from "../hooks/usePopularShows";
 import useOnAirShow from "../hooks/useOnAirShow";
 import useArrivingTodayShow from "../hooks/useArrivingTodayShow";
+import { IconPlus, IconVolume, IconVolumeOff } from "@tabler/icons-react";
 
 const TvShows = () => {
   const [showCards, setShowCards] = useState(true);
@@ -97,10 +98,10 @@ const TvShows = () => {
 
         <div className="   child plot overflow-hidden  text-white relative p-4 ">
           {/* <div className="overlay inset-0 bg-black opacity-50 h-full w-full absolute -z-10"> </div> */}
-          {series ? tvShows[1] && tvShows[1].overview : overview}
+          {series ? tvShows[1] && tvShows[1].overview.split(" ").slice(0, 50).join(" ") + "..." : overview.split(" ").slice(0, 50).join(" ") + "..."}
         </div>
 
-        <div className=" gap-4  flex items-center overflow-hidden bg-transparent px-4">
+        {/* <div className=" gap-4  flex items-center overflow-hidden bg-transparent px-4">
           <div className="grow ">
             <button className="bg-hotstar font-bold text-md rounded-md  text-white bg-transparent  items-center justify-center  py-4 w-full">
               <i className="fa-solid fa-play mr-2 text-xl hover:text-5xl"></i>{" "}
@@ -124,7 +125,32 @@ const TvShows = () => {
               )}
             </button>
           </div>
-        </div>
+        </div> */}
+  <div className=" gap-4  flex items-center overflow-hidden bg-transparent ">
+            <div className="grow ">
+              <button className="bg-white font-bold text-xl rounded-md  text-black  items-center justify-center  py-4 w-full">
+                <i className="fa-solid fa-play mr-2 text-xl hover:text-5xl"></i>{" "}
+                <span> Watch Now </span>
+              </button>
+            </div>
+            <div className="hover:cursor-pointer flex justify-around">
+              <button className="bg-white    font-bold text-md rounded-md   text-black flex-none items-stretch px-6 py-4">
+                <IconPlus size={24} stroke={3} color="black" />
+              </button>
+            </div>
+            <div className="hover:cursor-pointer ">
+              <button
+                onClick={HandleVolume}
+                className=" bg-white font-bold text-md rounded-md   text-black flex-none items-stretch px-6 py-4"
+              >
+                {isVolume ? (
+                  <IconVolume size={24} stroke={2} color="black" />
+                ) : (
+                  <IconVolumeOff size={24} stroke={2} color="black" />
+                )}
+              </button>
+            </div>
+          </div>
       </div>
     </div>
   );

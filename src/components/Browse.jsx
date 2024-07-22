@@ -132,6 +132,7 @@ const Browse = () => {
               </button>
             </div>
           </div>
+          
         </div>
       </div>
     </>

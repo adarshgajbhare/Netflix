@@ -105,7 +105,7 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
                       <li className=" hover:underline">Tv Show</li>{" "}
                     </Link>
                     <li className=" hover:underline">Movies</li>
-                    <li className=" hover:underline">Recently Added</li>
+                    <li className=" hover:underline">Search</li>
                     <li className=" hover:underline">My List</li>
                   </ul>
                 </div>
