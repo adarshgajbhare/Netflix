@@ -4,17 +4,13 @@ import React from "react";
 import NavbarBottom from "./NavbarBottom";
 import ShowCard from "./ShowCard";
 
-
 const SecondaryContainer = ({ isSeries, allMovies }) => {
-  
   return (
     <>
       {isSeries ? (
         <div className="">
-        
-          <ShowCard  title={"Top Rated"} movies={allMovies?.topShows} />{" "}
+          <ShowCard title={"Top Rated"} movies={allMovies?.topShows} />{" "}
           <ShowCard title={"Popular Shows"} movies={allMovies?.popularShow} />{" "}
-        
           <ShowCard title={"Upcoming Shows"} movies={allMovies?.onAirShow} />
           <ShowCard
             title={"On Air Shows "}
@@ -26,11 +22,12 @@ const SecondaryContainer = ({ isSeries, allMovies }) => {
         </div>
       ) : (
         <div className="flex flex-col gap-6 bg-black relative ">
+          <ShowCard title={"Trending"} movies={allMovies?.trendingMovie} />{" "}
           <ShowCard
             title={"Now Playing"}
             movies={allMovies?.nowPlayingMovies}
           />{" "}
-           <ShowCard
+          <ShowCard
             title={"Upcoming Movies"}
             movies={allMovies?.upcomingMovies}
           />
@@ -39,7 +36,6 @@ const SecondaryContainer = ({ isSeries, allMovies }) => {
             movies={allMovies?.popularMovies}
           />{" "}
           <ShowCard title={"Top Movies"} movies={allMovies?.topMovies} />
-         
           <div className="h-20"></div>
           <div className="lg:hidden 2xl:hidden">
             <NavbarBottom />

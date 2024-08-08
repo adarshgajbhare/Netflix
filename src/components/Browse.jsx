@@ -17,6 +17,7 @@ import TopSmallNav from "./TopSmallNav";
 import React from "react";
 import Recommendations from "./Recommendations";
 import { IconPlus, IconVolume, IconVolumeOff } from "@tabler/icons-react";
+import useTrendingMovie from "../hooks/useTrendingMovie";
 const Browse = () => {
   const { movieCards, setMoovieCards } = useState(false);
 
@@ -29,6 +30,8 @@ const Browse = () => {
   usePopularMovies();
   useTopMovies();
   useUpcomingMovies();
+
+  useTrendingMovie();
 
   const movies = useSelector((store) => store?.movies?.nowPlayingMovies);
   const allMovies = useSelector((store) => store?.movies);
@@ -61,29 +64,24 @@ const Browse = () => {
       <div className="main-container relative w-full min-h-full overflow-x-hidden ">
         <div className="absolute inset-0 -z-10  bg-[#131313]"></div>
         <div className="absolute h-full  w-full  -z-10  inset-0  ">
-          <div className="absolute inset-0 size-full bg-gradient-to-r from-black to-black/10 z-50">
-            
-          </div>
+          <div className="absolute inset-0 size-full bg-gradient-to-r from-black to-black/10 z-50"></div>
           <iframe
             className="hidden 2xl:block lg:block h-screen w-full object-cover scale-150 
             bg-gradient-to-t from-black"
             src={moviesYoutube}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; 
-            picture-in-picture; web-share"
-          ></iframe>
+            picture-in-picture; web-share"></iframe>
         </div>
         <div className="mobile 2xl:hidden lg:hidden">
           <div
             className="navbar z-50 bg-glass fixed w-full text-center flex 
-          justify-between items-center p-2"
-          >
+          justify-between items-center p-2">
             <div className="">
               <Header />
             </div>
             <i
               onClick={HandleSignOut}
-              className="fa-solid fa-power-off text-white text-3xl pr-2"
-            ></i>
+              className="fa-solid fa-power-off text-white text-3xl pr-2"></i>
           </div>
         </div>
         <TopSmallNav />
@@ -97,8 +95,7 @@ const Browse = () => {
         <SecondaryContainer isSeries={movieCards} allMovies={allMovies} />
         <div
           className="hidden 2xl:block lg:block   absolute w-1/3   xl:flex   top-44 left-10  gap-5  rounded-md    
-        flex-col   z-[999]"
-        >
+        flex-col   z-[999]">
           <div className="  font-bold tracking-tight child title text-6xl overflow-hidden text-white relative">
             {title ? title : original_title}
           </div>
@@ -122,8 +119,7 @@ const Browse = () => {
             <div className="hover:cursor-pointer ">
               <button
                 onClick={HandleVolume}
-                className=" bg-white font-bold text-md rounded-md   text-black flex-none items-stretch px-6 py-4"
-              >
+                className=" bg-white font-bold text-md rounded-md   text-black flex-none items-stretch px-6 py-4">
                 {isVolume ? (
                   <IconVolume size={24} stroke={2} color="black" />
                 ) : (
@@ -132,7 +128,6 @@ const Browse = () => {
               </button>
             </div>
           </div>
-          
         </div>
       </div>
     </>

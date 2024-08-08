@@ -20,6 +20,7 @@ export const POSTER_URL = "https://image.tmdb.org/t/p/w500";
  export const BASE_URL = "https://api.themoviedb.org/3/"
 
 // MOVIES API
+export const TRENDING_MOVIES = `${BASE_URL}/trending/movie/day?language=en-US`;
 export const NOW_PLAYING_MOVIES_API = `${BASE_URL}movie/now_playing?page=${pageNumber}`;
 export const POPULAR_MOVIES_API = `${BASE_URL}movie/popular?page=${pageNumber}`;
 export const TOP_RATED_MOVIES_API = `${BASE_URL}movie/top_rated?page=${pageNumber}`;
