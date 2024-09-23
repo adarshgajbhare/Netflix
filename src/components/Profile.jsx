@@ -11,13 +11,20 @@ import TopSmallNav from "./TopSmallNav";
 import Header from "./Header";
 import { signOut } from "firebase/auth";
 import { removeUser } from "../utils/userSlice";
+import {
+  IconDoorExit,
+  IconLogin2,
+  IconLogout,
+  IconLogout2,
+  IconPlugOff,
+  IconPower,
+} from "@tabler/icons-react";
 
 const Profile = () => {
   const userEmail = useSelector((store) => store.user?.email);
   const [watchLaterData, setWatchLaterData] = useState([]);
   const [favoriteData, setFavoriteData] = useState([]);
   const userName = useSelector((store) => store.user?.displayName);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,26 +74,29 @@ const Profile = () => {
 
   return (
     <>
-      <div className=" bg-black w-full min-h-[130vh] ">
+      <div className="bg-black w-full min-h-[130vh] overflow-auto">
         <div className="navbar py-4  h-14 hidden 2xl:block lg:block md:block">
           <Navbar />
         </div>
         <div className="mobile 2xl:hidden lg:hidden md:hidden ">
-          <div className="navbar z-50 bg-glass fixed w-full text-center flex justify-between items-center mb-56 p-2">
+          <div className="navbar z-50  bg-black/10 filter backdrop-blur-sm fixed w-full text-center flex justify-between items-center mb-56 p-2">
             <Header />
 
-            <i  onClick={HandleSignOut}
-              className="fa-solid fa-power-off text-white text-3xl pr-2"
-            >
-
-            </i>
+            <IconPower
+              onClick={HandleSignOut}
+              className=" text-white cursor-pointer size-8"
+              strokeWidth={1}
+              color="white"
+            />
           </div>
         </div>{" "}
         <div className="relative w-full">
           <TopSmallNav />
         </div>
         <div>
-          <h1 className="text-white font-bold text-3xl my-3 ml-6">Welcom back, {userName} </h1>
+          <h1 className="text-white font-bold text-3xl my-3 ml-6">
+            Welcome back, {userName}
+          </h1>
         </div>
         <div className="my-3">
           {watchLaterData && watchLaterData.length > 0 ? (

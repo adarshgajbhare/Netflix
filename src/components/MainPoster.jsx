@@ -45,8 +45,7 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
           "max-glare": 0.5,
           "glare-prerender": true,
         }}
-        style={{}}
-      >
+        style={{}}>
         <div className="mainPoster mobile 2xl:hidden lg:hidden">
           <div className="img-container  relative rounded-xl overflow-hidden md:scale-75">
             <div className="absolute inset-0  bg-gradient-to-t  opacity-75 from-black"></div>
@@ -77,77 +76,8 @@ const MainPoster = ({ title, poster_path, original_title, id }) => {
         </div>
       </Tilt>
       <div className="">
-       
         <Navbar />
       </div>
-      {/* <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block   ">
-        <div
-          className="img-container relative  rounded-md overflow-hidden 2xl:overflow-x-hidden md:scale-75
-           2xl:scale-100 lg:scale-100 2xl:w-full 
-           2xl:h-[80vh]  lg:h-80vh]  lg:w-full "
-        >
-          <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block ">
-            <div
-              className="navbar z-50  w-full text-center flex justify-between items-center p-2 2xl:bg-transparent 2xl:px-6 
-               lg:bg-transparent lg:px-6 2xl:absolute lg:absolute   "
-            >
-              <div className=" 2xl:flex 2xl:items-center 2xl:gap-3 lg:flex lg:items-center lg:gap-3 ">
-                <Header />
-                <div className="invisible 2xl:visible lg:visible">
-                  <ul className="text-white 2xl:font-bold xl:font-bold 2xl:flex 2xl:gap-3 lg:flex lg:gap-3 hover:cursor-pointer ">
-                    <Link to={"/Browse"}>
-                      {" "}
-                      <li className=" hover:underline">Home</li>
-                    </Link>
-
-                    <Link to={"/Shows"}>
-                      {" "}
-                      <li className=" hover:underline">Tv Show</li>{" "}
-                    </Link>
-                    <li className=" hover:underline">Movies</li>
-                    <li className=" hover:underline">Search</li>
-                    <li className=" hover:underline">My List</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="2xl:flex 2xl:items-center 2xl:gap-5 lg:flex lg:items-center lg:gap-3">
-                <i
-                  className="fa-solid fa-magnifying-glass text-black text-3xl opacity-70 2xl:text-white
-                 lg:text-white hover:cursor-pointer"
-                ></i>{" "}
-                <div
-                  className="relative "
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                >
-                  <img
-                    className="h-10 hover:cursor-pointer"
-                    src={user?.photoURL}
-                  />
-                  <div
-                    className={` absolute  text-xl -left-4 rounded py-1 cursor-pointer ${
-                      isHovered ? "" : "hidden"
-                    } `}
-                  >
-                    <Link to={`/profile/${user?.displayName}`}>
-                      <p className="text-white bg-hotstar py-3  px-4 mb-2">
-                        Profile
-                      </p>
-                    </Link>
-                    <p
-                      onClick={HandleSignOut}
-                      className="text-white bg-hotstar py-3"
-                    >
-                      Sign out
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="2xl:visible 2xl:w-full lg:visible lg:w-full 2xl:rounded-none "></div>
-        </div>
-      </div> */}
     </div>
   );
 };

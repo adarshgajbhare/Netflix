@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import TopSmallNav from "./TopSmallNav";
 import React from "react";
 import Recommendations from "./Recommendations";
-import { IconPlus, IconVolume, IconVolumeOff } from "@tabler/icons-react";
+import { IconPlus, IconPower, IconVolume, IconVolumeOff } from "@tabler/icons-react";
 import useTrendingMovie from "../hooks/useTrendingMovie";
 const Browse = () => {
   const { movieCards, setMoovieCards } = useState(false);
@@ -74,14 +74,17 @@ const Browse = () => {
         </div>
         <div className="mobile 2xl:hidden lg:hidden">
           <div
-            className="navbar z-50 bg-glass fixed w-full text-center flex 
+            className="navbar z-50  bg-black/10 filter backdrop-blur-sm fixed w-full text-center flex 
           justify-between items-center p-2">
             <div className="">
               <Header />
             </div>
-            <i
+            <IconPower
               onClick={HandleSignOut}
-              className="fa-solid fa-power-off text-white text-3xl pr-2"></i>
+              className=" text-white cursor-pointer size-8"
+              strokeWidth={1}
+              color="white"
+            />
           </div>
         </div>
         <TopSmallNav />

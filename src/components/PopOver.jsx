@@ -1,138 +1,146 @@
-/* eslint-disable react/prop-types */
-
 import React, { useState } from "react";
 import { POSTER_URL } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavoriteMovies, addWatchLaterMovies } from "../utils/savedSlice";
 import { Link, NavLink } from "react-router-dom";
-import { addDoc, collection } from "firebase/firestore";
-import { database } from "../utils/firebase";
-
-import Recommendations from "./Recommendations";
 import {
-  IconHeartFilled,
   IconPlayerPlay,
-  IconPlayerPlayFilled,
+  IconHeart,
   IconPlus,
+  IconCheck,
 } from "@tabler/icons-react";
-const PopOver = ({
+
+// Import Firebase modules
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getApp, getApps, initializeApp } from "firebase/app";
+
+// Initialize Firebase (you should replace these with your actual Firebase config)
+const firebaseConfig = {
+  // Your Firebase configuration object
+};
+
+// Initialize Firebase app
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = getFirestore(app);
+
+export default function PopOver({
   movie,
   id,
   poster_path,
   title,
   overview,
-  backdrop_path,
   release_date,
-  vote_average
-}) => {
-  const WatchLater = collection(database, "WatchLater");
-  const Favorite = collection(database, "Favorite");
+  genres,
+}) {
+  const WatchLater = collection(db, "WatchLater");
+  const Favorite = collection(db, "Favorite");
 
-  const [isClicked, setIsClicked] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isWatchLater, setIsWatchLater] = useState(false);
   const dispatch = useDispatch();
 
   const email = useSelector((store) => store.user.email);
 
-  const HandleWatchLater = () => {
-    setIsClicked(true);
-    dispatch(addWatchLaterMovies(movie));
-    addDoc(WatchLater, { movies: movie, email: email });
+  const HandleWatchLater = async () => {
+    if (!isWatchLater) {
+      setIsWatchLater(true);
+      dispatch(addWatchLaterMovies(movie));
+      try {
+        await addDoc(WatchLater, { movies: movie, email: email });
+      } catch (error) {
+        console.error("Error adding document: ", error);
+      }
+    }
   };
-  const HandleFavorite = () => {
-    setIsClicked(true);
-    dispatch(addFavoriteMovies(movie));
-    addDoc(Favorite, { movies: movie, email: email });
+
+  const HandleFavorite = async () => {
+    if (!isFavorite) {
+      setIsFavorite(true);
+      dispatch(addFavoriteMovies(movie));
+      try {
+        await addDoc(Favorite, { movies: movie, email: email });
+      } catch (error) {
+        console.error("Error adding document: ", error);
+      }
+    }
   };
- 
-  const HandleRec = () => {
-    <Recommendations vis={true} />;
-    document.querySelector(".main-rec").classList.remove("hidden");
-  };
+
   return (
-    <>
-      <div className="fixed z-50 inset-0 size-full overflow-hidden bg-black/70 filter backdrop-blur-sm ">
+    <div className="fixed z-50 inset-0 overflow-y-auto bg-black/90">
+      <div className="flex items-center justify-center min-h-screen p-4">
         <div
-          className="absolute top-1/2 left-1/2 flex  -translate-x-1/2 -translate-y-1/2 bg-[#242423] filter backdrop-blur-3xl 
-        w-3/5 h-[90%] rounded-lg overflow-hidden ">
-          <div className="img w-1/2 h-full shrink-0 overflow-hidden rounded-xl">
-            <img
-              className="size-full object-center"
-              src={
-                poster_path
-                  ? POSTER_URL + poster_path
-                  : POSTER_URL + poster_path
-              }
-            />
-          </div>
-
-          <div className=" details grow py-4 px-6 flex flex-col gap-2">
-            <div className="moveInfo grow   ">
-              <p className="title font-bold text-white text-4xl text-balance mb-2  w-full ">
-                {title ? title : "Title Not Available"}  {release_date.split("-")[0]}
+          className="relative w-full max-w-2xl h-[80vh] rounded-lg overflow-hidden shadow-xl"
+          style={{
+            backgroundImage: `url(${POSTER_URL + poster_path})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-6 space-y-4">
+              <h2 className="text-4xl font-bold text-white text-shadow text-wrap">
+                {title} {release_date && `(${release_date.split("-")[0]})`}
+              </h2>
+              <p className="text-lg text-white text-shadow">
+                {genres && genres.length > 0
+                  ? genres.join(", ")
+                  : "Genre not available"}
               </p>
-            {
-              
-             
-            }
-              <p className="rounded-lg bg-white/5  inline-block text-gray-500 text-lg/6 text-balance cursor-pointer">Drama</p>
-              <p className=" overview text-gray-400 text-lg/6 text-balance mt-2 font-bold  min-w-0  h-full overflow-hidden whitespace-pre-wrap  grow text-left ">
-                {overview
-                  ? overview.split(" ").splice(0, 60).join(" ")
-                  : "Overview Not Available"}
-              </p>
-
-          
-            </div>
-          
-            <div className="action-list mt-auto flex flex-col gap-3 w-full">
-              <NavLink
-                to={`/PlayingTrailer/${title}/${id}`}
-                onClick={HandleFavorite}
-                disabled={isClicked}
-                className="button focus:outline-none flex  bg-slate-950 shadow-[inset_0px_2px_0.5px_0px_rgba(255,255,255,0.4)] items-center justify-center gap-1 text-lg py-3
-              text-white font-bold rounded-md">
-                <IconPlayerPlayFilled
-                  size={20}
-                  color="white"
-                  strokeWidth={3}
-                  className="inline-block"
-                />
-                Play
-              </NavLink>
-
-              <button
-                onClick={HandleFavorite}
-                disabled={isClicked}
-                className="button focus:outline-none flex  bg-slate-950 shadow-[inset_0px_2px_0.5px_0px_rgba(255,255,255,0.4)] items-center justify-center gap-1 text-lg py-3
-              text-white font-bold rounded-md">
-                <IconHeartFilled
-                  size={20}
-                  color="white"
-                  strokeWidth={3}
-                  className="inline-block"
-                />
-                Favorite
-              </button>
-
-              <button
-                onClick={HandleWatchLater}
-                disabled={isClicked}
-                className="button focus:outline-none flex  bg-slate-950 shadow-[inset_0px_2px_0.5px_0px_rgba(255,255,255,0.4)] items-center justify-center gap-1 text-lg py-3
-              text-white font-bold rounded-md">
-                <IconPlus
-                  size={20}
-                  color="white"
-                  strokeWidth={3}
-                  className="inline-block"
-                />
-                My list
-              </button>
+              <div className="bg-black/70 backdrop-blur-md p-4 rounded-lg text-wrap">
+                <p className="text-base text-white">
+                  {overview
+                    ? overview.split(" ").splice(0, 30).join(" ")
+                    : "Overview Not Available"}
+                </p>
+              </div>
+              <div className="flex justify-between gap-2 pt-4">
+                <NavLink
+                  to={`/PlayingTrailer/${title}/${id}`}
+                  className="flex-1 inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
+                  <IconPlayerPlay size={20} className="mr-2" /> Play
+                </NavLink>
+                <button
+                  onClick={HandleFavorite}
+                  disabled={isFavorite}
+                  className={`flex-1 inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm ${
+                    isFavorite
+                      ? "bg-gray-600 cursor-not-allowed"
+                      : "bg-red-600 hover:bg-red-700 focus:ring-red-500"
+                  }`}>
+                  {isFavorite ? (
+                    <>
+                      <IconCheck size={20} className="mr-2" /> Liked
+                    </>
+                  ) : (
+                    <>
+                      <IconHeart size={20} className="mr-2" /> Favorite
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={HandleWatchLater}
+                  disabled={isWatchLater}
+                  className={`flex-1 inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm ${
+                    isWatchLater
+                      ? "bg-gray-600 cursor-not-allowed"
+                      : "bg-green-600 hover:bg-green-700 focus:ring-green-500"
+                  }`}>
+                  {isWatchLater ? (
+                    <>
+                      <IconCheck size={20} className="mr-2" /> Added
+                    </>
+                  ) : (
+                    <>
+                      <IconPlus size={20} className="mr-2" /> My List
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
-};
-
-export default PopOver;
+}

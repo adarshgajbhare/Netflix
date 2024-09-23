@@ -36,7 +36,7 @@ const Header = () => {
 
   return (
     <div className="">
-      <img className="h-12" src={NETFLIX_LOGO} />
+      <img className="h-8 " src={NETFLIX_LOGO} />
     </div>
   );
 };
