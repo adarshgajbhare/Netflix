@@ -13,15 +13,16 @@ const ShowCard = ({ title, movies }) => {
   const [hoveredId, setHoveredId] = useState(null);
   const [isClick, setIsClick] = useState(false);
 
-  const handleMouseEnter = (id) => {
+  const handleCardClick = (id) => {
     setHoveredId(id);
-    setIsClick(!isClick);
+    setIsClick(true);
   };
 
-  const handleMouseLeave = () => {
+  const handleClosePopOver = () => {
     setHoveredId(null);
+    setIsClick(false);
   };
-  console.log(movies, "fkdfkdkfdjkfjkaj");
+
   return (
     <>
       <h1 className="text-white font-bold text-3xl mt-3  ml-6">{title}</h1>
@@ -31,7 +32,7 @@ const ShowCard = ({ title, movies }) => {
           movies.map((movie) => (
             <div
               key={movie.id}
-              onClick={() => handleMouseEnter(movie.id)}
+              onClick={() => handleCardClick(movie.id)}
               className="card relative h-[350px] min-w-60 mr-5 rounded-md overflow-hidden"
             >
               <img
@@ -43,6 +44,7 @@ const ShowCard = ({ title, movies }) => {
               {/* </Link> */}
               {hoveredId === movie.id && hoveredId !== null && isClick ? (
                 <PopOver
+                  onClose={handleClosePopOver}
                   movie={movie}
                   id={hoveredId}
                   poster_path={movie.poster_path}

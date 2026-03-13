@@ -6,6 +6,8 @@ import React from "react";
 import PlayTrailer from "./PlayTrailer";
 import Profile from "./Profile";
 import Search from "./Search";
+import ReviewPage from "./ReviewPage";
+import Reviews from "./Reviews";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -32,6 +34,14 @@ const Body = () => {
     {
       path: "/search",
       element: <Search />,
+    },
+    {
+      path: "/review/:id",
+      element: <ReviewPage />,
+    },
+    {
+      path: "/reviews",
+      element: <Reviews />,
     },
   ]);
 

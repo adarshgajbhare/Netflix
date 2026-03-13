@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
@@ -10,6 +10,7 @@ import GapContainer from "./GapContainer";
 const Navbar = () => {
   const user = useSelector((store) => store?.user);
   const [isHovered, setIsHovered] = useState(false);
+  const profileMenuRef = useRef(null);
 
   const dispatch = useDispatch();
   const HandleSignOut = () => {
@@ -19,6 +20,23 @@ const Navbar = () => {
       })
       .catch((error) => {});
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setIsHovered(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <div className="laptop-ipad-big-laptop hidden 2xl:block lg:block">
@@ -44,6 +62,10 @@ const Navbar = () => {
                 {" "}
                 <li className=" hover:underline">Search</li>{" "}
               </Link>
+              <Link to={"/reviews"}>
+                {" "}
+                <li className=" hover:underline">Reviews</li>{" "}
+              </Link>
             </ul>
           </div>
         </div>
@@ -52,33 +74,37 @@ const Navbar = () => {
             {" "}
             <i
               className="fa-solid fa-magnifying-glass text-black text-3xl opacity-70 2xl:text-white
-                 lg:text-white hover:cursor-pointer"
-            ></i>{" "}
+                 lg:text-white hover:cursor-pointer"></i>{" "}
           </Link>
-          <div
-            className=" "
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+          <div className="relative" ref={profileMenuRef}>
             <img
               className="h-10 hover:cursor-pointer relative"
               src={user?.photoURL}
+              onClick={() => setIsHovered((prev) => !prev)}
             />
 
             <div
-              className={`absolute text-lg z-50 right-4 top-[75px]  rounded flex flex-col gap-2 bg-[#131313]  cursor-pointer ${
+              className={`absolute text-lg z-50 right-0 top-full mt-2 rounded flex flex-col gap-2 bg-[#131313] cursor-pointer ${
                 isHovered ? "" : "hidden"
-              }  transition-all duration-200 ease-in`}
-            >
-              <Link to={`/profile/${user?.displayName}`}>
+              }  transition-all duration-200 ease-in`}>
+              <Link
+                to={`/profile/${user?.displayName}`}
+                onClick={() => setIsHovered(false)}>
                 <p className="text-white border-b border-white/10 px-4 py-2  flex-1 w-full text-left font-semibold ">
                   Profile
                 </p>
               </Link>
+              <Link to={"/reviews"} onClick={() => setIsHovered(false)}>
+                <p className="text-white border-b border-white/10 px-4 py-2  flex-1 w-full text-left font-semibold ">
+                  Reviews
+                </p>
+              </Link>
               <p
-                onClick={HandleSignOut}
-                className="text-white border-b border-white/10 px-4 py-2 whitespace-nowrap flex-1 w-full text-left font-semibold "
-              >
+                onClick={() => {
+                  HandleSignOut();
+                  setIsHovered(false);
+                }}
+                className="text-white border-b border-white/10 px-4 py-2 whitespace-nowrap flex-1 w-full text-left font-semibold ">
                 Sign out
               </p>
             </div>
