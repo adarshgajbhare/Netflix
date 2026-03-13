@@ -88,7 +88,7 @@ const Navbar = () => {
                 isHovered ? "" : "hidden"
               }  transition-all duration-200 ease-in`}>
               <Link
-                to={`/profile/${user?.displayName}`}
+                to={`/profile/${user?.uid}`}
                 onClick={() => setIsHovered(false)}>
                 <p className="text-white border-b border-white/10 px-4 py-2  flex-1 w-full text-left font-semibold ">
                   Profile

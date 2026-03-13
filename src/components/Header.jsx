@@ -6,6 +6,7 @@ import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { syncUserProfile } from "../utils/social";
 const Header = () => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
@@ -14,6 +15,9 @@ const Header = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
+        syncUserProfile(user).catch((error) => {
+          console.error("Error syncing user profile:", error);
+        });
         dispatch(
           addUser({
             uid: uid,

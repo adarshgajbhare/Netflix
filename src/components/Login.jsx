@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import Header from "./Header";
 import React from "react";
+import { syncUserProfile } from "../utils/social";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -62,6 +63,9 @@ const Login = () => {
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
+              syncUserProfile(auth.currentUser).catch((error) => {
+                console.error("Error syncing new user profile:", error);
+              });
               dispatch(
                 addUser({
                   uid: uid,

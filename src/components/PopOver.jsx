@@ -228,10 +228,10 @@ export default function PopOver({
     <div
       className="fixed z-50 inset-0 overflow-y-auto bg-black/90"
       onClick={onClose}>
-      <div className="flex items-center justify-center min-h-screen p-4">
+      <div className="flex min-h-screen items-center justify-center p-3 sm:p-4">
         <div
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-2xl min-h-[80vh] rounded-lg overflow-hidden shadow-xl"
+          className="relative min-h-[80vh] w-full max-w-2xl overflow-hidden rounded-lg shadow-xl"
           style={{
             backgroundImage: `url(${POSTER_URL + poster_path})`,
             backgroundSize: "cover",
@@ -243,62 +243,62 @@ export default function PopOver({
             className="absolute right-4 top-4 z-[60] h-10 w-10 rounded-full bg-black/70 text-white border border-white/30 hover:bg-black/90">
             X
           </button>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent">
-            <div className="absolute bottom-0 left-0 right-0 p-6 space-y-4">
-              <h2 className="text-4xl font-bold text-white text-shadow text-wrap">
+          <div className="flex min-h-[80vh] items-end bg-gradient-to-t from-black via-black/70 to-transparent">
+            <div className="max-h-[calc(100vh-2rem)] w-full overflow-y-auto space-y-4 p-4 sm:p-6">
+              <h2 className="text-2xl font-bold text-white text-shadow text-wrap sm:text-4xl">
                 {title} {release_date && `(${release_date.split("-")[0]})`}
               </h2>
-              <p className="text-lg text-white text-shadow">
+              <p className="text-sm text-white text-shadow sm:text-lg">
                 {genres && genres.length > 0
                   ? genres.join(", ")
                   : "Genre not available"}
               </p>
               <div className="bg-black/70 backdrop-blur-md p-4 rounded-lg text-wrap">
-                <p className="text-base text-white">
+                <p className="text-sm text-white sm:text-base">
                   {overview
                     ? overview.split(" ").splice(0, 30).join(" ")
                     : "Overview Not Available"}
                 </p>
               </div>
-              <div className="flex justify-between gap-2 pt-4">
+              <div className="grid grid-cols-1 gap-2 pt-4 sm:grid-cols-2 xl:grid-cols-4">
                 <NavLink
                   to={`/PlayingTrailer/${title}/${id}`}
-                  className="flex-1 inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
-                  <IconPlayerPlay size={20} className="mr-2" /> Play
+                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                  <IconPlayerPlay size={18} className="mr-2 shrink-0" /> Play
                 </NavLink>
                 <button
                   onClick={HandleFavorite}
                   disabled={favoriteLoading}
-                  className={`flex-1 inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm ${
+                  className={`inline-flex min-h-11 items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                     isFavorite
                       ? "bg-gray-700 hover:bg-gray-800 focus:ring-gray-500"
                       : "bg-red-600 hover:bg-red-700 focus:ring-red-500"
                   }`}>
                   {isFavorite ? (
                     <>
-                      <IconTrash size={20} className="mr-2" /> Remove Favorite
+                      <IconTrash size={18} className="mr-2 shrink-0" /> Remove Favorite
                     </>
                   ) : (
                     <>
-                      <IconHeart size={20} className="mr-2" /> Favorite
+                      <IconHeart size={18} className="mr-2 shrink-0" /> Favorite
                     </>
                   )}
                 </button>
                 <button
                   onClick={HandleWatchLater}
                   disabled={watchLaterLoading}
-                  className={`flex-1 inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm ${
+                  className={`inline-flex min-h-11 items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                     isWatchLater
                       ? "bg-gray-700 hover:bg-gray-800 focus:ring-gray-500"
                       : "bg-green-600 hover:bg-green-700 focus:ring-green-500"
                   }`}>
                   {isWatchLater ? (
                     <>
-                      <IconTrash size={20} className="mr-2" /> Remove
+                      <IconTrash size={18} className="mr-2 shrink-0" /> Remove
                     </>
                   ) : (
                     <>
-                      <IconPlus size={20} className="mr-2" /> My List
+                      <IconPlus size={18} className="mr-2 shrink-0" /> My List
                     </>
                   )}
                 </button>
@@ -307,8 +307,8 @@ export default function PopOver({
                     setShowReviewForm((prev) => !prev);
                     setReviewMessage("");
                   }}
-                  className="flex-1 inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-600 text-base font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:text-sm">
-                  <IconStar size={20} className="mr-2" />
+                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-transparent bg-yellow-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
+                  <IconStar size={18} className="mr-2 shrink-0" />
                   {hasReview ? "Your Review" : "Mark Watched"}
                 </button>
               </div>

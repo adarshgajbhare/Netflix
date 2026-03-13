@@ -82,7 +82,7 @@ const ReviewPage = () => {
       });
 
       setMessage("Review saved successfully.");
-      setTimeout(() => navigate(`/profile/${user.displayName}`), 700);
+      setTimeout(() => navigate(`/profile/${user.uid}`), 700);
     } catch (error) {
       console.error("Error saving review:", error);
       setMessage("Failed to save review.");
@@ -100,7 +100,7 @@ const ReviewPage = () => {
       <div className="mx-auto w-full max-w-4xl px-4 pt-24 pb-28 2xl:pt-8 lg:pt-8 md:pt-8">
         <div className="mb-6">
           <Link
-            to={`/profile/${user?.displayName || ""}`}
+            to={`/profile/${user?.uid || ""}`}
             className="text-sm text-white/70 hover:text-white">
             Back to Profile
           </Link>

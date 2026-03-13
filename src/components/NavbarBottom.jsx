@@ -40,7 +40,7 @@ const NavbarBottom = () => {
             visibleOptions ? "hidden" : ""
           }`}></div>
 
-        <Link to={`/profile/${user?.displayName}`}>
+        <Link to={`/profile/${user?.uid}`}>
           <div className="w-full">
             <IconUserSquareRounded className=" text-white size-8 cursor-pointer"/>
           </div>{" "}
